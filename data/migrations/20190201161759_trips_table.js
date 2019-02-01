@@ -12,6 +12,12 @@ exports.up = function(knex, Promise) {
 			.integer('duration_in_hrs', 128)
 			.unsigned()
 			.notNullable();
+		tbl
+			.integer('user_id')
+			.unsigned()
+			.notNullable()
+			.references('id')
+			.inTable('users');
 	});
 };
 
