@@ -20,15 +20,12 @@ const guideSeeds = [
 		username: 'sjoskowitz0',
 		age: 77
 		// careerLength: 79,
-		// password: password1
 	},
 	{
 		id: 2,
 		name: 'Silvana McKendry',
 		username: 'smckendry1',
 		age: 50
-		// careerLength: 27,
-		// password: password2
 	},
 	{
 		id: 3,
@@ -36,7 +33,6 @@ const guideSeeds = [
 		username: 'mschleswigholstein2',
 		age: 82,
 		careerLength: 105
-		// password: password3
 	},
 	{
 		id: 4,
@@ -44,15 +40,12 @@ const guideSeeds = [
 		username: 'cwills3',
 		age: 91,
 		careerLength: 30
-		// password: password4
 	},
 	{
 		id: 5,
 		name: 'Ingeborg Bultitude',
 		username: 'ibultitude4',
 		age: 13
-		// careerLength: 71,
-		// password: password5
 	},
 	{
 		id: 6,
@@ -60,7 +53,6 @@ const guideSeeds = [
 		username: 'mhartgill5',
 		age: 6,
 		careerLength: 23
-		// password: password6
 	},
 	{
 		id: 7,
@@ -68,7 +60,6 @@ const guideSeeds = [
 		username: 'fward6',
 		age: 77,
 		careerLength: 41
-		// password: password7
 	},
 	{
 		id: 8,
@@ -76,7 +67,6 @@ const guideSeeds = [
 		username: 'mwhapples7',
 		age: 49,
 		careerLength: 91
-		// password: password8
 	},
 	{
 		id: 9,
@@ -84,7 +74,6 @@ const guideSeeds = [
 		username: 'agewer8',
 		age: 62,
 		careerLength: 111
-		// password: password9
 	},
 	{
 		id: 10,
@@ -92,14 +81,15 @@ const guideSeeds = [
 		username: 'gkeaton9',
 		age: 100,
 		careerLength: 65
-		// password: password10
 	}
 ];
 
+const taglineDefault =
+	'Aliquam nec pellentesque erat. Nam tristique et tellus quis rutrum. Suspendisse potenti. Mauris arcu neque, feugiat eu ex eu, dapibus dignissim augue. Integer nec augue velit. Donec sit amet neque cursus, tempus turpis vel, sodales libero. Cras id vestibulum velit. Etiam pulvinar commodo ultricies. Quisque quis eros a purus sollicitudin pharetra sit amet ut lectus. Vivamus est sem, finibus non pulvinar sit amet, rutrum sed urna. Mauris viverra ex et dui maximus, at dignissim elit.';
+
 for (let i = 0; i < guideSeeds.length; i++) {
 	guideSeeds[i].password = bcrypt.hashSync(passArr[i], 14);
-	guideSeeds[i].tagline = "The best guides you've never heard of!";
-	// console.log(guideSeeds[i]);
+	guideSeeds[i].tagline = taglineDefault;
 }
 
 exports.seed = function(knex, Promise) {
@@ -121,4 +111,4 @@ exports.seed = function(knex, Promise) {
 // const password7 = bcrypt.hashSync('casSZgIYSQNX', 14);
 // const password8 = bcrypt.hashSync('JWB0enaSz5', 14);
 // const password9 = bcrypt.hashSync('ZB6M5Hk3', 14);
-// const password10 = bcrypt.hashSync('rxzNHq', 14);
+// c = bcrypt.hashSync('rxzNHq', 14);
