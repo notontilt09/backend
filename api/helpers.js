@@ -10,8 +10,13 @@ module.exports = {
 		return db('trips');
 	},
 	getTripsByUser: function(id) {
-		return db('trips').where({ user_id: id });
+		return db('trips').where({ guide_id: id });
 		// .first();
+	},
+	getUserById: function(id) {
+		return db('users')
+			.where({ id })
+			.first();
 	},
 	register: function(user) {
 		return db('users').insert(user);
