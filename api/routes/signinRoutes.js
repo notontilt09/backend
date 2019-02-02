@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 
-const { getUserById, register, generateToken, login } = require('../helpers');
+const { getUserById, register, generateToken, login, getUsers } = require('../helpers');
 
 const router = express.Router();
 
@@ -30,6 +30,11 @@ router.post('/login', async (req, res) => {
 		// console.log(err);
 		res.status(500).json(err);
 	}
+});
+
+router.get('/', async (req, res) => {
+	const users = await getUsers();
+	res.status(200).json(users);
 });
 
 module.exports = router;

@@ -98,7 +98,8 @@ const guideSeeds = [
 
 for (let i = 0; i < guideSeeds.length; i++) {
 	guideSeeds[i].password = bcrypt.hashSync(passArr[i], 14);
-	console.log(guideSeeds[i]);
+	guideSeeds[i].tagline = "The best guides you've never heard of!";
+	// console.log(guideSeeds[i]);
 }
 
 exports.seed = function(knex, Promise) {
