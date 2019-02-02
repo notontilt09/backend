@@ -41,10 +41,10 @@ module.exports = {
 			.update(info);
 	},
 	register: function(user) {
-		return db('users').insert(user);
+		return db('guides').insert(user);
 	},
 	login: function(user) {
-		return db('users')
+		return db('guides')
 			.where({ username: user.username })
 			.select('id', 'username as user', 'password', 'name', 'age', 'careerlength as months_worked')
 			.first();

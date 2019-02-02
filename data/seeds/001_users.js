@@ -18,7 +18,7 @@ const guideSeeds = [
 		id: 1,
 		name: 'Stephannie Joskowitz',
 		username: 'sjoskowitz0',
-		age: 77
+		age: 34
 		// careerLength: 79,
 	},
 	{
@@ -31,55 +31,55 @@ const guideSeeds = [
 		id: 3,
 		name: 'Maressa Schleswig-Holstein',
 		username: 'mschleswigholstein2',
-		age: 82,
+		age: 21,
 		careerLength: 105
 	},
 	{
 		id: 4,
 		name: 'Clem Wills',
 		username: 'cwills3',
-		age: 91,
+		age: 22,
 		careerLength: 30
 	},
 	{
 		id: 5,
 		name: 'Ingeborg Bultitude',
 		username: 'ibultitude4',
-		age: 13
+		age: 43
 	},
 	{
 		id: 6,
 		name: 'Mirna Hartgill',
 		username: 'mhartgill5',
-		age: 6,
+		age: 47,
 		careerLength: 23
 	},
 	{
 		id: 7,
 		name: 'Felicle Ward',
 		username: 'fward6',
-		age: 77,
+		age: 48,
 		careerLength: 41
 	},
 	{
 		id: 8,
 		name: 'Mair Whapples',
 		username: 'mwhapples7',
-		age: 49,
+		age: 30,
 		careerLength: 91
 	},
 	{
 		id: 9,
 		name: 'Angele Gewer',
 		username: 'agewer8',
-		age: 62,
+		age: 31,
 		careerLength: 111
 	},
 	{
 		id: 10,
 		name: 'Gilburt Keaton',
 		username: 'gkeaton9',
-		age: 100,
+		age: 29,
 		careerLength: 65
 	}
 ];
