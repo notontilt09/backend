@@ -1,5 +1,5 @@
 exports.up = function(knex, Promise) {
-	return knex.schema.createTable('users', function(tbl) {
+	return knex.schema.createTable('guides', function(tbl) {
 		tbl.increments();
 		tbl
 			.string('username', 128)
@@ -11,12 +11,11 @@ exports.up = function(knex, Promise) {
 			.unique()
 			.notNullable();
 		tbl.integer('age').unsigned();
-		// .notNullable();
-		tbl.string('tagline', 256);
-		tbl.integer('careerLength').unsigned();
+		tbl.string('tagline', 256).defaultTo('the best guide youve never heard of');
+		tbl.string('careerLength').defaultTo('6 months');
 	});
 };
 
 exports.down = function(knex, Promise) {
-	return knex.schema.dropTableIfExists('users');
+	return knex.schema.dropTableIfExists('guides');
 };

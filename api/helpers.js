@@ -9,12 +9,16 @@ module.exports = {
 	getTrips: function() {
 		return db('trips');
 	},
+	getTripsByUser: function(id) {
+		return db('trips')
+			.where({ guide_id: id })
+			.select('id', 'title', 'description');
+	},
+	getTripById: function(id) {
+		return db('trips').where({ id });
+	},
 	getUsers: function() {
 		return db('users');
-	},
-	getTripsByUser: function(id) {
-		return db('trips').where({ guide_id: id });
-		// .first();
 	},
 	getUserById: function(id) {
 		return db('users')
@@ -23,6 +27,12 @@ module.exports = {
 	},
 	register: function(user) {
 		return db('users').insert(user);
+	},
+	login: function(user) {
+		return db('users')
+			.where({ username: user.username })
+			.select('id', 'username as user', 'password', 'name', 'age', 'careerlength as months_worked')
+			.first();
 	},
 	generateToken: function(user) {
 		const payload = {
@@ -35,11 +45,15 @@ module.exports = {
 		};
 		return jwt.sign(payload, secret, options);
 	},
-	login: function(user) {
-		return db('users')
-			.where({ username: user.username })
-			.select('id', 'username as user', 'password', 'name', 'age', 'careerlength as months_worked')
-			.first();
+	deleteTrip: function(id) {
+		return db('trips')
+			.where({ id })
+			.del();
+	},
+	updateTrip: function(id, info) {
+		return db('trips')
+			.where({ id })
+			.update(info);
 	}
 	// secret
 };
