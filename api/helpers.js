@@ -17,13 +17,28 @@ module.exports = {
 	getTripById: function(id) {
 		return db('trips').where({ id });
 	},
+	deleteTrip: function(id) {
+		return db('trips')
+			.where({ id })
+			.del();
+	},
+	updateTrip: function(id, info) {
+		return db('trips')
+			.where({ id })
+			.update(info);
+	},
 	getUsers: function() {
-		return db('users');
+		return db('guides');
 	},
 	getUserById: function(id) {
-		return db('users')
+		return db('guides')
 			.where({ id })
 			.first();
+	},
+	updateUser: function(id, info) {
+		return db('guides')
+			.where({ id })
+			.update(info);
 	},
 	register: function(user) {
 		return db('users').insert(user);
@@ -44,16 +59,5 @@ module.exports = {
 			jwtid: '12345'
 		};
 		return jwt.sign(payload, secret, options);
-	},
-	deleteTrip: function(id) {
-		return db('trips')
-			.where({ id })
-			.del();
-	},
-	updateTrip: function(id, info) {
-		return db('trips')
-			.where({ id })
-			.update(info);
 	}
-	// secret
 };

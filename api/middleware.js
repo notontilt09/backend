@@ -9,6 +9,7 @@ module.exports = function(req, res, next) {
 				res.status(401).json({ error: 'Invalid token' });
 			} else {
 				req.decodedToken = decodedToken;
+				// console.log(decodedToken, req.body);
 				next();
 			}
 		});

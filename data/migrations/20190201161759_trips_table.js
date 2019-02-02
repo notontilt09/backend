@@ -14,7 +14,8 @@ exports.up = function(knex, Promise) {
 			.unsigned()
 			.notNullable()
 			.references('id')
-			.inTable('users');
+			.inTable('users')
+			.onDelete('CASCADE');
 		tbl
 			.string('img_url', 256)
 			.defaultTo(

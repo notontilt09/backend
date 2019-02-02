@@ -11,7 +11,8 @@ exports.up = function(knex, Promise) {
 			.unique()
 			.notNullable();
 		tbl.integer('age').unsigned();
-		tbl.string('tagline', 256).defaultTo('the best guide youve never heard of');
+		tbl.string('title').defaultTo('novice');
+		tbl.string('tagline', 256);
 		tbl.string('careerLength').defaultTo('6 months');
 	});
 };
