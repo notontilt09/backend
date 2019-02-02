@@ -11,7 +11,7 @@ const server = express();
 server.use(express.json());
 server.use(helmet());
 
-server.use('/guidr', middleware, protectedRouter);
+server.use('/user', middleware, protectedRouter);
 server.use('/auth', signInRouter);
 
 module.exports = server;

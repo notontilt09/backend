@@ -1,5 +1,11 @@
 const express = require('express');
-const { getTripsByUser, updateTrip, deleteTrip, getTripById } = require('../../helpers');
+const {
+	getTripsByUser,
+	updateTrip,
+	deleteTrip,
+	getTripById,
+	getUserById
+} = require('../../helpers');
 
 const router = express.Router();
 
@@ -33,13 +39,28 @@ router.get('/:id/:tripId', async (req, res) => {
 	}
 });
 
-router.put('/:tripId', async (req, res) => {
-	const { tripId } = req.params;
+router.put('/:id/:tripId', async (req, res) => {
+	const { tripId, id } = req.params;
 	const updates = req.body;
+
 	try {
+		const user = await getUserById(id);
+		const trip = await getTripById(tripId);
+
+		if (!user) return res.status(404).json({ error: 'A user with that ID does not exist' });
+
+		if (trip.guide_id !== user.id)
+			return res
+				.status(400)
+				.json({ error: "You must be the trip's guide to make changes to the trip" });
+
 		const success = await updateTrip(tripId, updates);
-		console.log(success);
-		res.status(203).json(success);
+
+		if (success === 0) {
+			res.status(404).json({ error: 'A trip with that ID does not exist' });
+		} else {
+			res.status(203).json(success);
+		}
 	} catch (err) {
 		console.log(err);
 		res.status(500).json(err);
