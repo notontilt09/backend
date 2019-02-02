@@ -9,6 +9,9 @@ module.exports = {
 	getTrips: function() {
 		return db('trips');
 	},
+	getUsers: function() {
+		return db('users');
+	},
 	getTripsByUser: function(id) {
 		return db('trips').where({ guide_id: id });
 		// .first();
@@ -35,7 +38,7 @@ module.exports = {
 	login: function(user) {
 		return db('users')
 			.where({ username: user.username })
-			.select('id', 'username', 'name')
+			.select('id', 'username as user', 'password', 'name', 'age', 'careerlength as months_worked')
 			.first();
 	}
 	// secret

@@ -3,7 +3,8 @@ const express = require('express');
 const helmet = require('helmet');
 const bcrypt = require('bcryptjs');
 
-const { getUserById, register, generateToken, login } = require('./helpers');
+const { getUserById, register, generateToken, login, getUsers } = require('./helpers');
+const middleware = require('./middleware');
 const protectedRouter = require('./routes/protectedRoutes');
 
 const server = express();
@@ -19,8 +20,6 @@ server.post('/api/register', async (req, res) => {
 		const token = generateToken(user);
 		res.status(201).json({ token, id: user.id });
 	} catch (err) {
-		// if (err.errno === 19) return res.status(400).json({ error: 'That username already exists' });
-		console.log(err);
 		res.status(500).json(err);
 	}
 });
@@ -29,15 +28,21 @@ server.post('/api/login', async (req, res) => {
 	const creds = req.body;
 	try {
 		const user = await login(creds);
-		if (user && bcrypt.hashSync(creds.password, user.password)) {
+		if (user && bcrypt.compareSync(creds.password, user.password)) {
 			const token = generateToken(user);
 			res.status(200).json({ user, token });
 		}
 	} catch (err) {
+		console.log(err);
 		res.status(500).json(err);
 	}
 });
 
-server.use('/guide', protectedRouter);
+server.get('/', async (req, res) => {
+	const users = await getUsers();
+	res.status(200).json(users);
+});
+
+server.use('/guide', middleware, protectedRouter);
 
 module.exports = server;

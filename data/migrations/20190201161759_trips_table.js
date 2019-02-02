@@ -1,6 +1,6 @@
 exports.up = function(knex, Promise) {
 	return knex.schema.createTable('trips', function(tbl) {
-		tbl.increments('trip_id');
+		tbl.increments();
 		tbl
 			.string('title', 128)
 			.notNullable()
@@ -18,6 +18,7 @@ exports.up = function(knex, Promise) {
 			.notNullable()
 			.references('id')
 			.inTable('users');
+		tbl.string('img_url', 256);
 	});
 };
 
