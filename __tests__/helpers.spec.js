@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const { auth, user, trip } = require('../api/helpers');
 const { guideSeed } = require('../data/seeds/users');
@@ -58,6 +59,46 @@ describe('helper function tests', () => {
 			expect(compare).toBeTruthy();
 			expect(guide.username).toEqual(user.username);
 			expect(guide.name).toEqual(user.name);
+		});
+
+		it('should generate jwtToken', async () => {
+			const secret = process.env.JWT_SECRET || 'beep boop';
+			const testGuide = {
+				username: 'testerrrr'
+			};
+			const options = {
+				expiresIn: '24h',
+				jwtid: 'guidr'
+			};
+
+			const token = await auth.generateToken(testGuide);
+			const expected = await jwt.sign(testGuide, secret, options);
+			const decoded = await jwt.verify(token, secret, options);
+
+			expect(token).toBeTruthy();
+			expect(decoded.username).toEqual(testGuide.username);
+			expect(decoded.jti).toBe('guidr');
+			expect(token).toEqual(expected);
+		});
+
+		it('should verify token', async () => {
+			const secret = process.env.JWT_SECRET || 'beep boop';
+			const testGuide = {
+				username: 'testerrrr'
+			};
+			const options = {
+				expiresIn: '24h',
+				jwtid: 'guidr'
+			};
+
+			const token = await auth.generateToken(testGuide);
+			const decoded = await auth.decodeToken(token);
+			const jwtDecoded = await jwt.verify(token, secret, options);
+
+			expect(decoded.jti).toEqual(jwtDecoded.jti);
+			expect(decoded.iat).toEqual(jwtDecoded.iat);
+			expect(decoded.exp).toEqual(jwtDecoded.exp);
+			expect(decoded.username).toBe(jwtDecoded.username);
 		});
 	});
 

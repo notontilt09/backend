@@ -17,14 +17,27 @@ module.exports.auth = {
 		return bcrypt.hashSync(password, saltNum);
 	},
 	generateToken: function(user) {
+		const secret = process.env.JWT_SECRET || 'beep boop';
 		const payload = {
 			username: user.username
 		};
 		const options = {
 			expiresIn: '24h',
-			jwtid: 'Guidr'
+			jwtid: 'guidr'
 		};
-		return jwt.sign(payload, process.env.JWT_SECRET, options);
+		return jwt.sign(payload, secret, options);
+	},
+	decodeToken: function(token, callback) {
+		const secret = process.env.JWT_SECRET || 'beep boop';
+		const options = {
+			expiresIn: '24h',
+			jwtid: 'guidr'
+		};
+		if (callback) {
+			return jwt.verify(token, secret, options, callback);
+		} else {
+			return jwt.verify(token, secret, options);
+		}
 	}
 };
 
