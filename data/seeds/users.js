@@ -93,11 +93,6 @@ const guides = [
 const taglineDefault =
 	'Aliquam nec pellentesque erat. Nam tristique et tellus quis rutrum. Suspendisse potenti. Mauris arcu neque, feugiat eu ex eu, dapibus dignissim augue. Integer nec augue velit. Donec sit amet neque cursus, tempus turpis vel, sodales libero. Cras id vestibulum velit. Etiam pulvinar commodo ultricies. Quisque quis eros a purus sollicitudin pharetra sit amet ut lectus. Vivamus est sem, finibus non pulvinar sit amet, rutrum sed urna. Mauris viverra ex et dui maximus, at dignissim elit.';
 
-// for (let i = 0; i < guideSeeds.length; i++) {
-// 	guideSeeds[i].password = bcrypt.hashSync(passArr[i], 14);
-// 	guideSeeds[i].tagline = taglineDefault;
-// }
-
 // hashed passwords and default tagline text are added to each guide object
 const seededGuides = guides.map((guide, i) => {
 	guide.password = hashPass(passArr[i], 14);
@@ -112,3 +107,5 @@ exports.seed = function(knex, Promise) {
 			return knex('guides').insert(seededGuides);
 		});
 };
+
+module.exports.guideSeed = seededGuides;

@@ -5,10 +5,11 @@ const {
 	user: { getUserById, getUsers },
 	auth: { register, login, generateToken, hashPass }
 } = require('../helpers');
+
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
-	const { password } = req.body;
+	let { password } = req.body;
 	password = hashPass(password, 14);
 
 	try {

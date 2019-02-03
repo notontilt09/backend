@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const db = require('../data/dbConfig');
-// const secret = process.env.JWT_SECRET;
 
 module.exports.auth = {
 	register: function(user) {

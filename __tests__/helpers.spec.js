@@ -1,52 +1,64 @@
-const request = require('supertest');
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 const { auth, user, trip } = require('../api/helpers');
+const { guideSeed } = require('../data/seeds/users');
+const { tripSeed } = require('../data/seeds/trips');
 const db = require('../data/dbConfig');
 
-// beforeEach(async () => {
-// 	await db('guides').truncate();
-// 	await db('guides').insert(seededGuides);
-// });
+afterEach(async () => {
+	const guides = await db('guides');
+	const trips = await db('trips');
+	if (guides.length > 10) {
+		await db('guides').truncate();
+		await db('guides').insert(guideSeed);
+	}
+	if (trips.length > 40) {
+		await db('trips').truncate();
+		await db('trips').insert(tripSeed);
+	}
+});
 
 describe('helper function tests', () => {
 	describe('auth helper functions', () => {
-		// 	it('should register a new user', async () => {
-		// 		const addUser = {
-		// 			username: '2',
-		// 			password: 'test',
-		// 			name: '2'
-		// 		};
-		// 		const id = await auth.register(addUser);
-		// 		const person = await db('guides')
-		// 			.where({ id: id[0] })
-		// 			.first();
-		// 		const guides = await db('guides');
-		// 		// hash password and compare to password on object that comes back from db (just extra check to be SUPER sure)
-		// 		const hash = await auth.hashPass(addUser.password, 14);
-		// 		const compare = await bcrypt.compareSync(person.password, hash);
-		// 		expect(person.name).toEqual('2');
-		// 		expect(person.username).toBe('2');
-		// 		expect(person.password).toEqual('test');
-		// 		expect(guides).toHaveLength(11);
-		// 		expect(compare).toBeTruthy();
-		// 	});
-		// 	it('should log user in', async () => {
-		// 		const user = {
-		// 			username: 'sjoskowitz0',
-		// 			password: '850RKI7uKgC',
-		// 			name: 'Stephannie Joskowitz'
-		// 		};
-		// 		const guide = await auth.login(user);
-		// 		const guides = await db('guides');
-		// 		// const hash = await auth.hashPass(user.password, 14);
-		// 		const compare = await bcrypt.compareSync(user.password, guide.password);
-		// 		expect(guides).toHaveLength(10);
-		// 		expect(guide).toBeTruthy();
-		// 		expect(compare).toBeTruthy();
-		// 		expect(guide.username).toEqual(user.username);
-		// 		expect(guide.name).toEqual(user.name);
-		// 	});
+		it('should register a new user', async () => {
+			const addUser = {
+				username: '2',
+				password: 'test',
+				name: '2'
+			};
+			const id = await auth.register(addUser);
+			const person = await db('guides')
+				.where({ id: id[0] })
+				.first();
+			const guides = await db('guides');
+
+			// hash password and compare to password on object that comes back from db (just extra check to be SUPER sure)
+			const hash = await auth.hashPass(addUser.password, 14);
+			const compare = await bcrypt.compareSync(person.password, hash);
+
+			expect(person.name).toEqual('2');
+			expect(person.username).toBe('2');
+			expect(person.password).toEqual('test');
+			expect(guides).toHaveLength(11);
+			expect(compare).toBeTruthy();
+		});
+
+		it('should log user in', async () => {
+			const user = {
+				username: 'sjoskowitz0',
+				password: '850RKI7uKgC',
+				name: 'Stephannie Joskowitz'
+			};
+			const guide = await auth.login(user);
+			const guides = await db('guides');
+			const compare = await bcrypt.compareSync(user.password, guide.password);
+
+			expect(guides).toHaveLength(10);
+			expect(guide).toBeTruthy();
+			expect(compare).toBeTruthy();
+			expect(guide.username).toEqual(user.username);
+			expect(guide.name).toEqual(user.name);
+		});
 	});
 
 	describe('user helper functions', () => {
@@ -150,19 +162,50 @@ describe('helper function tests', () => {
 				title: 'Test Title',
 				description: 'This is a test',
 				duration: '1 minute',
-				type: 'Professional',
+				type: 'Leisure Hiking, Sightseeing',
 				guide_id: 1
 			};
 			let created = await trip.createTrip(testTrip);
 			let expected = await db('trips')
-				.where({ id: created })
+				.where({ id: created[0] })
 				.first();
 
-			expect(created[0]).toEqual(41);
+			expect(created[0]).toEqual(expected.id);
 			expect(testTrip.title).toBe(expected.title);
-			expect(testTrip.id).toEqual(created[0]);
+			expect(testTrip.guide_id).toEqual(expected.guide_id);
 			expect(testTrip.type).toEqual(expected.type);
 			expect(testTrip.duration).toBe(expected.duration);
+		});
+
+		it('should delete an existing trip', async () => {
+			let id = 41;
+			let numDeleted = await trip.deleteTrip(id);
+			let expected = await db('trips')
+				.where({ id })
+				.del();
+			let trips = await trip.getTrips();
+
+			expect(numDeleted).toBe(expected);
+			expect(trips.length).toEqual(40);
+		});
+
+		it('should update an existing trip', async () => {
+			let id = 1;
+			let updatedTrip = {
+				title: 'Updated!',
+				type: 'Incredibly unenjoyable',
+				description: 'Testing is sucking the soul right out of my body. Please kill me'
+			};
+			let numUpdated = await trip.updateTrip(id, updatedTrip);
+			let expected = await db('trips')
+				.where({ id })
+				.first();
+
+			expect(numUpdated).toEqual(1);
+			expect(numUpdated).toBeTruthy();
+			expect(updatedTrip.title).toBe(expected.title);
+			expect(updatedTrip.description).toEqual(expected.description);
+			expect(updatedTrip.type).toEqual(expected.type);
 		});
 	});
 });
