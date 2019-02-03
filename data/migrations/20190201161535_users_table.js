@@ -10,7 +10,10 @@ exports.up = function(knex, Promise) {
 			.string('name', 128)
 			.unique()
 			.notNullable();
-		tbl.integer('age').unsigned();
+		tbl
+			.integer('age')
+			.unsigned()
+			.defaultTo(25);
 		tbl.string('title').defaultTo('novice');
 		tbl.string('tagline', 256);
 		tbl.string('careerLength').defaultTo('6 months');

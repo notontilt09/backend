@@ -6,9 +6,15 @@ exports.up = function(knex, Promise) {
 			.notNullable()
 			.unique();
 		tbl.string('description', 512).notNullable();
-		tbl.string('designation', 128).notNullable();
-		tbl.string('type', 128).notNullable();
-		tbl.string('duration', 128).notNullable();
+		tbl.string('designation', 128).defaultTo('Professional');
+		tbl
+			.string('type', 128)
+			.notNullable()
+			.defaultTo('Outdoor adventure!');
+		tbl
+			.string('duration', 128)
+			.notNullable()
+			.defaultTo('3 days');
 		tbl
 			.integer('guide_id')
 			.unsigned()

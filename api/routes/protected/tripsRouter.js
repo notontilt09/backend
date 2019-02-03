@@ -1,11 +1,9 @@
 const express = require('express');
 const {
-	getTripsByUser,
-	updateTrip,
-	deleteTrip,
-	getTripById,
-	getUserById
+	user: { getUserById },
+	trip: { getTripsByUser, getTripById, updateTrip, deleteTrip, createTrip }
 } = require('../../helpers');
+const { hasCorrectKeys, checkDesignation } = require('../../middleware');
 
 const router = express.Router();
 
@@ -60,6 +58,27 @@ router.put('/:id/:tripId', async (req, res) => {
 			res.status(203).json(success);
 		}
 	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
+router.post('/:userId/create', hasCorrectKeys, checkDesignation, async (req, res) => {
+	const { userId } = req.params;
+	const tripInfo = req.body;
+	try {
+		const user = await getUserById(userId);
+		if (!user) return res.status(400).json({ error: 'A user with that ID does not exist' });
+
+		const id = await createTrip({ ...tripInfo, guide_id: user.id });
+		if (!id) {
+			res.status(400).json({ error: 'Please include' });
+		} else {
+			const newTrip = await getTripById(id[0]);
+			res.status(201).json(newTrip);
+		}
+	} catch (err) {
+		if (err.errno === 19)
+			return res.status(400).json({ error: 'A trip with that title already exists' });
 		res.status(500).json(err);
 	}
 });

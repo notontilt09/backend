@@ -1,5 +1,7 @@
 const express = require('express');
-const { updateUser } = require('../../helpers');
+const {
+	user: { updateUser }
+} = require('../../helpers');
 
 const router = express.Router();
 
@@ -14,7 +16,6 @@ router.put('/update/:id', async (req, res) => {
 			res.status(200).json(numUpdated);
 		}
 	} catch (err) {
-		// console.log(err);
 		res.status(500).json(err);
 	}
 });
