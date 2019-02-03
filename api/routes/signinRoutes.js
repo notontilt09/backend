@@ -3,16 +3,16 @@ const bcrypt = require('bcryptjs');
 
 const {
 	user: { getUserById, getUsers },
-	auth: { register, login, generateToken }
+	auth: { register, login, generateToken, hashPass }
 } = require('../helpers');
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
-	const userInfo = req.body;
-	userInfo.password = bcrypt.hashSync(userInfo.password, 14);
+	const { password } = req.body;
+	password = hashPass(password, 14);
 
 	try {
-		const ids = await register(userInfo);
+		const ids = await register(req.body);
 		const user = await getUserById(ids[0]);
 		const token = generateToken(user);
 

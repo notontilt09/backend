@@ -1,9 +1,8 @@
-const knex = require('knex');
-const knexConfig = require('../knexfile');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
-const db = knex(knexConfig.development);
-const secret = process.env.JWT_SECRET;
+const db = require('../data/dbConfig');
+// const secret = process.env.JWT_SECRET;
 
 module.exports.auth = {
 	register: function(user) {
@@ -15,6 +14,9 @@ module.exports.auth = {
 			.select('id', 'username', 'password', 'name', 'age', 'careerlength as guide_exp')
 			.first();
 	},
+	hashPass: function(password, saltNum) {
+		return bcrypt.hashSync(password, saltNum);
+	},
 	generateToken: function(user) {
 		const payload = {
 			username: user.username
@@ -23,7 +25,7 @@ module.exports.auth = {
 			expiresIn: '24h',
 			jwtid: 'Guidr'
 		};
-		return jwt.sign(payload, secret, options);
+		return jwt.sign(payload, process.env.JWT_SECRET, options);
 	}
 };
 
