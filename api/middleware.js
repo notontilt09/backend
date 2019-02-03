@@ -9,7 +9,6 @@ module.exports = function(req, res, next) {
 				res.status(401).json({ error: 'Invalid token' });
 			} else {
 				req.decodedToken = decodedToken;
-				// console.log(decodedToken, req.body);
 				next();
 			}
 		});
@@ -48,8 +47,6 @@ module.exports = {
 	checkDesignation: function(req, res, next) {
 		if (req.body.designation) {
 			const { designation } = req.body;
-			// console.log('hey', designation);
-			// console.log(!/private/i.test(designation) && !/professional/i.test(designation));
 
 			if (!/private/i.test(designation) && !/professional/i.test(designation)) {
 				return res

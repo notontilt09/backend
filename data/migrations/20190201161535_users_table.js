@@ -14,9 +14,9 @@ exports.up = function(knex, Promise) {
 			.integer('age')
 			.unsigned()
 			.defaultTo(25);
-		tbl.string('title').defaultTo('novice');
+		tbl.string('title').defaultTo('Expert Guide');
 		tbl.string('tagline', 256);
-		tbl.string('careerLength').defaultTo('6 months');
+		tbl.string('careerLength', 128);
 	});
 };
 

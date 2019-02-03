@@ -12,17 +12,16 @@ module.exports.auth = {
 	login: function(user) {
 		return db('guides')
 			.where({ username: user.username })
-			.select('id', 'username as user', 'password', 'name', 'age', 'careerlength as months_worked')
+			.select('id', 'username', 'password', 'name', 'age', 'careerlength as guide_exp')
 			.first();
 	},
 	generateToken: function(user) {
 		const payload = {
 			username: user.username
 		};
-
 		const options = {
-			expiresIn: '1h',
-			jwtid: '12345'
+			expiresIn: '24h',
+			jwtid: 'Guidr'
 		};
 		return jwt.sign(payload, secret, options);
 	}

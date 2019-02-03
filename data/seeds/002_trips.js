@@ -241,7 +241,7 @@ exports.seed = function(knex, Promise) {
 				},
 				{
 					id: 24,
-					title: "That's Entertainment, Part II",
+					title: 'Soggy Bottom Boys',
 					description: 'Guatemala',
 					img_url: 'http://dummyimage.com/202x144.png/cc0000/ffffff',
 					type: 'Cuyotenango',
@@ -291,7 +291,7 @@ exports.seed = function(knex, Promise) {
 				},
 				{
 					id: 29,
-					title: 'K-911',
+					title: 'Brap Life',
 					description: 'China',
 					img_url: 'http://dummyimage.com/182x127.png/5fa2dd/ffffff',
 					type: 'Pantian',
@@ -301,7 +301,7 @@ exports.seed = function(knex, Promise) {
 				},
 				{
 					id: 30,
-					title: 'Valley of Decision, The',
+					title: 'Get Rich or Die Tryin',
 					description: 'China',
 					img_url: 'http://dummyimage.com/198x162.png/5fa2dd/ffffff',
 					type: 'Guodu',

@@ -18,69 +18,71 @@ const guideSeeds = [
 		id: 1,
 		name: 'Stephannie Joskowitz',
 		username: 'sjoskowitz0',
-		age: 34
-		// careerLength: 79,
+		age: 34,
+		careerLength: '3 years'
 	},
 	{
 		id: 2,
 		name: 'Silvana McKendry',
 		username: 'smckendry1',
-		age: 50
+		age: 50,
+		careerLength: '9 months'
 	},
 	{
 		id: 3,
 		name: 'Maressa Schleswig-Holstein',
 		username: 'mschleswigholstein2',
 		age: 21,
-		careerLength: 105
+		careerLength: '10 months'
 	},
 	{
 		id: 4,
 		name: 'Clem Wills',
 		username: 'cwills3',
 		age: 22,
-		careerLength: 30
+		careerLength: '3 years'
 	},
 	{
 		id: 5,
 		name: 'Ingeborg Bultitude',
 		username: 'ibultitude4',
-		age: 43
+		age: 43,
+		careerLength: '3.75 years'
 	},
 	{
 		id: 6,
 		name: 'Mirna Hartgill',
 		username: 'mhartgill5',
 		age: 47,
-		careerLength: 23
+		careerLength: '12 years'
 	},
 	{
 		id: 7,
 		name: 'Felicle Ward',
 		username: 'fward6',
 		age: 48,
-		careerLength: 41
+		careerLength: '4.5 years'
 	},
 	{
 		id: 8,
 		name: 'Mair Whapples',
 		username: 'mwhapples7',
 		age: 30,
-		careerLength: 91
+		careerLength: '6 years'
 	},
 	{
 		id: 9,
 		name: 'Angele Gewer',
 		username: 'agewer8',
 		age: 31,
-		careerLength: 111
+		careerLength: '10.5 years'
 	},
 	{
 		id: 10,
 		name: 'Gilburt Keaton',
 		username: 'gkeaton9',
-		age: 29,
-		careerLength: 65
+		age: 21,
+		careerLength: '8 months'
 	}
 ];
 
@@ -93,22 +95,9 @@ for (let i = 0; i < guideSeeds.length; i++) {
 }
 
 exports.seed = function(knex, Promise) {
-	// Deletes ALL existing entries
 	return knex('guides')
 		.truncate()
 		.then(function() {
-			// Inserts seed entries
 			return knex('guides').insert(guideSeeds);
 		});
 };
-
-// const password1 = bcrypt.hashSync('850RKI7uKgC', 14);
-// const password2 = bcrypt.hashSync('VKVUFwZzfA7J', 14);
-// const password3 = bcrypt.hashSync('Ola4PcyaHq7f', 14);
-// const password4 = bcrypt.hashSync('mnZuXokiM', 14);
-// const password5 = bcrypt.hashSync('dC0BXc', 14);
-// const password6 = bcrypt.hashSync('v7ZQWVqxil', 14);
-// const password7 = bcrypt.hashSync('casSZgIYSQNX', 14);
-// const password8 = bcrypt.hashSync('JWB0enaSz5', 14);
-// const password9 = bcrypt.hashSync('ZB6M5Hk3', 14);
-// c = bcrypt.hashSync('rxzNHq', 14);
