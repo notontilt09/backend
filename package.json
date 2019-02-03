@@ -6,7 +6,7 @@
 	"author": "Holden B <holden.bucher.92@gmail.com>",
 	"license": "MIT",
 	"scripts": {
-		"test": "cross-env DB_ENV=testing jest --watch --verbose",
+		"test": "cross-env DB_ENV=testing jest --watchAll --verbose",
 		"server": "nodemon index.js",
 		"start": "node index.js"
 	},
