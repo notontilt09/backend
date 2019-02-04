@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
 	let { password } = req.body;
-	password = hashPass(password, 14);
+	req.body.password = hashPass(password, 14);
 
 	try {
 		const ids = await register(req.body);
