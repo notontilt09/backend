@@ -65,12 +65,12 @@ router.post('/:guideId/create', hasCorrectKeys, checkDesignation, async (req, re
 		const user = await getUserById(guideId);
 		if (!user) return res.status(400).json({ error: 'A user with that ID does not exist' });
 
-		const [tripId] = await createTrip({ ...tripInfo, guide_id: user.id });
-		const newTrip = await getTripByIds(tripId, guideId);
+		const tripId = await createTrip({ ...tripInfo, guide_id: user.id });
+		const newTrip = await getTripByIds(tripId[0], guideId);
 		res.status(201).json(newTrip);
 	} catch (err) {
-		if (err.errno === 19)
-			return res.status(400).json({ error: 'A trip with that title already exists' });
+		// if (err.errno === 19)
+		// 	return res.status(400).json({ error: 'A trip with that title already exists' });
 		res.status(500).json(err);
 	}
 });

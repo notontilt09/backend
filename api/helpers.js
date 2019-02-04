@@ -5,7 +5,7 @@ const db = require('../data/dbConfig');
 
 module.exports.auth = {
 	register: function(user) {
-		return db('guides').insert(user);
+		return db('guides').insert(user, 'id');
 	},
 	login: function(user) {
 		return db('guides')
@@ -77,7 +77,7 @@ module.exports.trip = {
 			.first();
 	},
 	createTrip: function(trip) {
-		return db('trips').insert(trip);
+		return db('trips').insert(trip, 'id');
 	},
 	deleteTrip: function(id) {
 		return db('trips')
