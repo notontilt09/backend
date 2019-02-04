@@ -29,6 +29,17 @@ module.exports = {
 			next();
 		}
 	},
+	// hasAuthKeys: function(req, res, next) {
+	// 	let user = req.body;
+	// 	const { username, password, name } = user;
+	// 	if (!(username && password && name)) {
+	// 		return res.status(400).json({
+	// 			error: 'Must have username and password fields to login. Plus name field to register'
+	// 		});
+	// 	} else {
+	// 		next();
+	// 	}
+	// },
 	checkDesignation: function(req, res, next) {
 		if (req.body.designation) {
 			const { designation } = req.body;
