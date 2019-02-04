@@ -16,6 +16,7 @@ router.put('/update/:id', async (req, res) => {
 			res.status(200).json(numUpdated);
 		}
 	} catch (err) {
+		//shouldn't ever reach this error unless server is unreachable
 		res.status(500).json(err);
 	}
 });
