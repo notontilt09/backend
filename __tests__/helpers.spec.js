@@ -2,8 +2,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const { auth, user, trip } = require('../api/helpers');
-const { guideSeed } = require('../data/seeds/users');
-const { tripSeed } = require('../data/seeds/trips');
+const { guideSeed } = require('../data/seeds/01_users');
+const { tripSeed } = require('../data/seeds/02_trips');
 const db = require('../data/dbConfig');
 
 afterEach(async () => {

@@ -3,7 +3,7 @@ const request = require('supertest');
 const {
 	auth: { register, login, decodeToken }
 } = require('../api/helpers');
-const { guideSeed } = require('../data/seeds/users');
+const { guideSeed } = require('../data/seeds/01_users');
 const server = require('../api/server');
 const db = require('../data/dbConfig');
 

@@ -20,7 +20,7 @@ exports.up = function(knex, Promise) {
 			.unsigned()
 			.notNullable()
 			.references('id')
-			.inTable('users')
+			.inTable('guides')
 			.onDelete('CASCADE');
 		tbl
 			.string('img_url', 256)

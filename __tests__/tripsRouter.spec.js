@@ -89,6 +89,7 @@ describe('Trips router tests (/trips routes)', () => {
 			expect(response.body.designation).toEqual(expected.designation);
 		});
 	});
+
 	describe('PUT /:guideId/:tripId route', () => {
 		it('it should respond with 203 for success', async () => {
 			let guideId = 1;
