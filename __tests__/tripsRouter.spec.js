@@ -1,7 +1,7 @@
 const request = require('supertest');
 const server = require('../api/server');
 const {
-	trip: { getTrips, getTripsByUser, getTripById, updateTrip, deleteTrip, createTrip }
+	trip: { getById, getTripsByUser, getTripByIds, updateTrip, deleteTrip, createTrip }
 } = require('../api/helpers');
 
 var token;
@@ -47,7 +47,7 @@ describe('Trips router tests (/trips routes)', () => {
 			expect(obj.id).toEqual(expected[i].id);
 		});
 	});
-	describe('GET /:id/:tripId route', () => {
+	describe('GET /:guideId/:tripId route', () => {
 		it('it should return 200 status for good request', async () => {
 			const guideId = 1;
 			const tripId = 5;
@@ -80,13 +80,191 @@ describe('Trips router tests (/trips routes)', () => {
 			let response = await request(server)
 				.get(`/user/trips/${guideId}/${tripId}`)
 				.set('authorization', token);
-			let expected = await getTripById(tripId, guideId);
+			let expected = await getTripByIds(tripId, guideId);
 
 			expect(response.body).toBeTruthy();
 			expect(response.body.id).toEqual(expected.id);
 			expect(response.body.title).toEqual(expected.title);
 			expect(response.body.description).toEqual(expected.description);
 			expect(response.body.designation).toEqual(expected.designation);
+		});
+	});
+	describe('PUT /:guideId/:tripId route', () => {
+		it('it should respond with 203 for success', async () => {
+			let guideId = 1;
+			let tripId = 5;
+			let update = { description: 'wow no way' };
+			let response = await request(server)
+				.put(`/user/trips/${guideId}/${tripId}`)
+				.set('authorization', token)
+				.send(update);
+
+			expect(response.status).toBe(203);
+		});
+		it('it should respond with 404 for wrong guideId', async () => {
+			let guideId = 111;
+			let tripId = 5;
+			let update = { description: 'wow no way' };
+			let response = await request(server)
+				.put(`/user/trips/${guideId}/${tripId}`)
+				.set('authorization', token)
+				.send(update);
+
+			expect(response.status).toBe(404);
+		});
+		it('it should respond with 400 for no guide/trip not being linked', async () => {
+			let guideId = 3;
+			let tripId = 5;
+			let update = { description: 'wow no way' };
+			let response = await request(server)
+				.put(`/user/trips/${guideId}/${tripId}`)
+				.set('authorization', token)
+				.send(update);
+
+			expect(response.status).toBe(400);
+		});
+		it('it should respond with 404 for wrong tripId', async () => {
+			let guideId = 1;
+			let tripId = 333;
+			let update = { description: 'wow no way' };
+			let response = await request(server)
+				.put(`/user/trips/${guideId}/${tripId}`)
+				.set('authorization', token)
+				.send(update);
+
+			expect(response.status).toBe(404);
+		});
+		it('should return id of changed trip', async () => {
+			let guideId = 1;
+			let tripId = 5;
+			let update = { description: 'wow no way' };
+			let response = await request(server)
+				.put(`/user/trips/${guideId}/${tripId}`)
+				.set('authorization', token)
+				.send(update);
+
+			expect(response.body).toBe(1);
+		});
+	});
+	describe('POST /:guideId/create', () => {
+		it('should respond with 201 on success', async () => {
+			const guideId = 1;
+			const addTrip = {
+				title: 'testaasdfarossa',
+				description: 'This is a test trip again',
+				designation: 'professional',
+				duration: '3.5 days',
+				type: 'Backcountry rock-climbing'
+			};
+			let response = await request(server)
+				.post(`/user/trips/${guideId}/create`)
+				.set('authorization', token)
+				.send(addTrip);
+
+			expect(response.status).toEqual(201);
+		});
+		it('should respond with 400 for bad guideId', async () => {
+			const guideId = 111;
+			const addTrip = {
+				title: 'tesasasfdtaso',
+				description: 'This is a test trip again',
+				designation: 'professional',
+				duration: '3.5 days',
+				type: 'Backcountry rock-climbing'
+			};
+			let response = await request(server)
+				.post(`/user/trips/${guideId}/create`)
+				.set('authorization', token)
+				.send(addTrip);
+
+			expect(response.status).toEqual(400);
+		});
+		it('should respond with 404 for missing req params', async () => {
+			const guideId = 1;
+			const addTrip = {
+				designation: 'professional',
+				duration: '3.5 days',
+				type: 'Backcountry rock-climbing'
+			};
+			let response = await request(server)
+				.post(`/user/trips/${guideId}/create`)
+				.set('authorization', token)
+				.send(addTrip);
+
+			expect(response.status).toEqual(404);
+		});
+		it('should respond with 400 for wrong designation', async () => {
+			const guideId = 1;
+			const addTrip = {
+				title: 'adsfadsg',
+				description: 'This is a test trip again',
+				designation: 'important',
+				duration: '3.5 days',
+				type: 'Backcountry rock-climbing'
+			};
+			let response = await request(server)
+				.post(`/user/trips/${guideId}/create`)
+				.set('authorization', token)
+				.send(addTrip);
+
+			expect(response.status).toEqual(400);
+		});
+		it('should respond with newly created trip', async () => {
+			const guideId = 1;
+			const addTrip = {
+				title: 'adfas',
+				description: 'This is a test trip again',
+				designation: 'professional',
+				duration: '3.5 days',
+				type: 'Backcountry rock-climbing'
+			};
+			let response = await request(server)
+				.post(`/user/trips/${guideId}/create`)
+				.set('authorization', token)
+				.send(addTrip);
+
+			const { designation, title, description, duration, type, guide_id } = response.body;
+			expect(title).toEqual(addTrip.title);
+			expect(description).toEqual(addTrip.description);
+			expect(designation).toEqual(
+				addTrip.designation.charAt(0).toUpperCase() + addTrip.designation.slice(1)
+			);
+			expect(duration).toEqual(addTrip.duration);
+			expect(type).toEqual(addTrip.type);
+			expect(guide_id).toEqual(guideId);
+		});
+	});
+	describe('DELETE /:tripId route', () => {
+		it('should respond with 202 success code', async () => {
+			let tripId = 40;
+			let response = await request(server)
+				.delete(`/user/trips/${tripId}/`)
+				.set('authorization', token);
+
+			expect(response.status).toBe(202);
+		});
+		it('should respond with 400 failure code', async () => {
+			let tripId = 47;
+			let response = await request(server)
+				.delete(`/user/trips/${tripId}/`)
+				.set('authorization', token);
+
+			expect(response.status).toBe(400);
+		});
+		it('should respond with the number of items deleted', async () => {
+			let tripId = 38;
+			let response = await request(server)
+				.delete(`/user/trips/${tripId}/`)
+				.set('authorization', token);
+
+			expect(response.body).toBe(1);
+
+			tripId = 39;
+			response = await request(server)
+				.delete(`/user/trips/${tripId}/`)
+				.set('authorization', token);
+
+			expect(response.body).toBe(1);
 		});
 	});
 });

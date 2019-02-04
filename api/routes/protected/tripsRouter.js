@@ -1,16 +1,16 @@
 const express = require('express');
 const {
 	user: { getUserById },
-	trip: { getTripsByUser, getTripById, updateTrip, deleteTrip, createTrip }
+	trip: { getTripsByUser, getTripByIds, getById, updateTrip, deleteTrip, createTrip }
 } = require('../../helpers');
 const { hasCorrectKeys, checkDesignation } = require('../../middleware');
 
 const router = express.Router();
 
-router.get('/:id/all', async (req, res) => {
-	const { id } = req.params;
+router.get('/:guideId/all', async (req, res) => {
+	const { guideId } = req.params;
 	try {
-		const trips = await getTripsByUser(id);
+		const trips = await getTripsByUser(guideId);
 		if (trips.length === 0) {
 			res.status(404).json({ error: 'A guide with that ID does not exist' });
 		} else {
@@ -24,7 +24,7 @@ router.get('/:id/all', async (req, res) => {
 router.get('/:guideId/:tripId', async (req, res) => {
 	const { tripId, guideId } = req.params;
 	try {
-		const trip = await getTripById(tripId, guideId);
+		const trip = await getTripByIds(tripId, guideId);
 		if (!trip) {
 			res.status(404).json({ error: 'A trip with that ID does not exist for the specified user' });
 		} else {
@@ -35,47 +35,39 @@ router.get('/:guideId/:tripId', async (req, res) => {
 	}
 });
 
-router.put('/:id/:tripId', async (req, res) => {
-	const { tripId, id } = req.params;
+router.put('/:guideId/:tripId', async (req, res) => {
+	const { tripId, guideId } = req.params;
 	const updates = req.body;
 
 	try {
-		const user = await getUserById(id);
-		const trip = await getTripById(tripId);
-
+		const user = await getUserById(guideId);
+		const trip = await getById(tripId);
+		const connection = await getTripByIds(tripId, guideId);
 		if (!user) return res.status(404).json({ error: 'A user with that ID does not exist' });
-
-		if (trip.guide_id !== user.id)
+		if (!trip) return res.status(404).json({ error: 'A trip with that ID does not exist' });
+		if (!connection) {
 			return res
 				.status(400)
 				.json({ error: "You must be the trip's guide to make changes to the trip" });
+		}
 
 		const success = await updateTrip(tripId, updates);
-
-		if (success === 0) {
-			res.status(404).json({ error: 'A trip with that ID does not exist' });
-		} else {
-			res.status(203).json(success);
-		}
+		res.status(203).json(success);
 	} catch (err) {
 		res.status(500).json(err);
 	}
 });
 
-router.post('/:userId/create', hasCorrectKeys, checkDesignation, async (req, res) => {
-	const { userId } = req.params;
+router.post('/:guideId/create', hasCorrectKeys, checkDesignation, async (req, res) => {
+	const { guideId } = req.params;
 	const tripInfo = req.body;
 	try {
-		const user = await getUserById(userId);
+		const user = await getUserById(guideId);
 		if (!user) return res.status(400).json({ error: 'A user with that ID does not exist' });
 
-		const id = await createTrip({ ...tripInfo, guide_id: user.id });
-		if (!id) {
-			res.status(400).json({ error: 'Please include' });
-		} else {
-			const newTrip = await getTripById(id[0]);
-			res.status(201).json(newTrip);
-		}
+		const [tripId] = await createTrip({ ...tripInfo, guide_id: user.id });
+		const newTrip = await getTripByIds(tripId, guideId);
+		res.status(201).json(newTrip);
 	} catch (err) {
 		if (err.errno === 19)
 			return res.status(400).json({ error: 'A trip with that title already exists' });

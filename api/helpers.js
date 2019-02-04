@@ -61,12 +61,17 @@ module.exports.trip = {
 	getTrips: function() {
 		return db('trips');
 	},
+	getById: function(id) {
+		return db('trips')
+			.where({ id })
+			.first();
+	},
 	getTripsByUser: function(id) {
 		return db('trips')
 			.where({ guide_id: id })
 			.select('id', 'title', 'description', 'img_url');
 	},
-	getTripById: function(tripId, guideId) {
+	getTripByIds: function(tripId, guideId) {
 		return db('trips')
 			.where({ id: tripId, guide_id: guideId })
 			.first();

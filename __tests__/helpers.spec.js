@@ -9,11 +9,11 @@ const db = require('../data/dbConfig');
 afterEach(async () => {
 	const guides = await db('guides');
 	const trips = await db('trips');
-	if (guides.length > 10) {
+	if (guides.length !== 10) {
 		await db('guides').truncate();
 		await db('guides').insert(guideSeed);
 	}
-	if (trips.length > 40) {
+	if (trips.length !== 40) {
 		await db('trips').truncate();
 		await db('trips').insert(tripSeed);
 	}
@@ -187,7 +187,7 @@ describe('helper function tests', () => {
 		it('should get trip by id', async () => {
 			let tripId = 5;
 			let guideId = 1;
-			let singleTrip = await trip.getTripById(tripId, guideId);
+			let singleTrip = await trip.getTripByIds(tripId, guideId);
 			let expected = await db('trips')
 				.where({ id: tripId, guide_id: guideId })
 				.first();
