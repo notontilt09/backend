@@ -2,6 +2,7 @@ const {
 	auth: { decodeToken }
 } = require('./helpers');
 
+
 module.exports = {
 	verifyAuth: function(req, res, next) {
 		const token = req.headers.authorization;
