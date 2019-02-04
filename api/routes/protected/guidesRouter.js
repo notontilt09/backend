@@ -1,9 +1,30 @@
 const express = require('express');
 const {
-	user: { updateUser }
+	user: { updateUser, getUserById, getUsers }
 } = require('../../helpers');
 
 const router = express.Router();
+
+router.get('/:guideId', async (req, res) => {
+	const { guideId } = req.params;
+	try {
+		const guide = await getUserById(guideId);
+		return guide
+			? res.status(200).json(guide)
+			: res.status(404).json({ error: 'That user does not exist' });
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
+router.get('/all', async (req, res) => {
+	try {
+		const guides = await getUsers();
+		res.status(200).json(guides);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 
 router.put('/update/:id', async (req, res) => {
 	const { id } = req.params;
