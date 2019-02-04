@@ -11,7 +11,7 @@ router.get('/:id/all', async (req, res) => {
 	const { id } = req.params;
 	try {
 		const trips = await getTripsByUser(id);
-		if (!trips) {
+		if (trips.length === 0) {
 			res.status(404).json({ error: 'A guide with that ID does not exist' });
 		} else {
 			res.status(200).json(trips);
@@ -21,12 +21,12 @@ router.get('/:id/all', async (req, res) => {
 	}
 });
 
-router.get('/:id/:tripId', async (req, res) => {
-	const { tripId } = req.params;
+router.get('/:guideId/:tripId', async (req, res) => {
+	const { tripId, guideId } = req.params;
 	try {
-		const trip = await getTripById(tripId);
+		const trip = await getTripById(tripId, guideId);
 		if (!trip) {
-			res.status(404).json({ error: 'A trip with that ID does not exist' });
+			res.status(404).json({ error: 'A trip with that ID does not exist for the specified user' });
 		} else {
 			res.status(200).json(trip);
 		}

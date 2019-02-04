@@ -154,7 +154,7 @@ describe('helper function tests', () => {
 			updates = {
 				tagline: 'i also like updates',
 				age: 24,
-				name: 'Janice Janicerson'
+				careerLength: '2 days'
 			};
 			numUpdated = await user.updateUser(id, updates);
 			guide = await user.getUserById(id);
@@ -163,7 +163,6 @@ describe('helper function tests', () => {
 			expect(numUpdated).toBeTruthy();
 			expect(guide.tagline).toEqual(updates.tagline);
 			expect(guide.age).toEqual(updates.age);
-			expect(guide.name).toEqual(updates.name);
 		});
 	});
 
@@ -187,9 +186,10 @@ describe('helper function tests', () => {
 
 		it('should get trip by id', async () => {
 			let tripId = 5;
-			let singleTrip = await trip.getTripById(tripId);
+			let guideId = 1;
+			let singleTrip = await trip.getTripById(tripId, guideId);
 			let expected = await db('trips')
-				.where({ id: tripId })
+				.where({ id: tripId, guide_id: guideId })
 				.first();
 
 			expect(singleTrip.length).toEqual(expected.length);

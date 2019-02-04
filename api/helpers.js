@@ -66,9 +66,9 @@ module.exports.trip = {
 			.where({ guide_id: id })
 			.select('id', 'title', 'description', 'img_url');
 	},
-	getTripById: function(id) {
+	getTripById: function(tripId, guideId) {
 		return db('trips')
-			.where({ id })
+			.where({ id: tripId, guide_id: guideId })
 			.first();
 	},
 	createTrip: function(trip) {

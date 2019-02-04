@@ -16,6 +16,13 @@ beforeAll(async () => {
 	token = response.body.token;
 });
 
+// afterAll(async () => {
+// 	await request(server)
+// 		.put(`/user/guides/update/${1}`)
+// 		.set('authorization', token)
+// 		.send({ name: 'Stephannie Joskowitz' });
+// });
+
 describe('Guide router tests (/user routes)', () => {
 	describe('PUT /user/update/:id route', () => {
 		it('should send back 200 status code for success', async () => {
@@ -42,7 +49,7 @@ describe('Guide router tests (/user routes)', () => {
 				careerLength: '6 years',
 				age: 27
 			};
-			//everything fine but the invalid token
+			// everything fine but the invalid token
 			const response = await request(server)
 				.put(`/user/guides/update/${id}`)
 				.set('authorization', ';asdkfja;')
@@ -57,7 +64,7 @@ describe('Guide router tests (/user routes)', () => {
 				careerLength: '6 years',
 				age: 27
 			};
-			//valid token, but invalid user id
+			// valid token, but invalid user id
 			const response = await request(server)
 				.put(`/user/guides/update/${id}`)
 				.set('authorization', token)
