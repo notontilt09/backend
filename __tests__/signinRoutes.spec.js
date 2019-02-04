@@ -1,7 +1,8 @@
 const request = require('supertest');
 
 const {
-	auth: { register, login, decodeToken }
+	auth: { register, login, decodeToken },
+	user: { getUserById, getUsers }
 } = require('../api/helpers');
 const { guideSeed } = require('../data/seeds/01_users');
 const server = require('../api/server');
@@ -43,16 +44,20 @@ describe('Sign In Route Tests (/auth routes)', () => {
 		});
 
 		it('should send back object with token and user', async () => {
-			const guides = await db('guides');
+			const guides = await getUsers();
 			const lastId = guides[guides.length - 1].id;
 
 			const response = await request(server)
 				.post('/auth/register')
 				.send(user);
 			const decoded = await decodeToken(response.body.token);
+			const expectedUser = await db('guides')
+				.where({ id: lastId + 1 })
+				.first();
 
 			expect(response.body).toBeTruthy();
-			expect(response.body.id).toEqual(lastId + 1);
+			expect(response.body.user.id).toEqual(lastId + 1);
+			expect(response.body.user.username).toEqual(expectedUser.username);
 			expect(decoded.username).toEqual(user.username);
 		});
 	});
