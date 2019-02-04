@@ -8,10 +8,12 @@ module.exports.auth = {
 		return db('guides').insert(user, 'id');
 	},
 	login: function(user) {
-		return db('guides')
-			.where({ username: user.username })
-			.select('id', 'username', 'password', 'name', 'age')
-			.first();
+		return (
+			db('guides')
+				.where({ username: user.username })
+				// .select('id', 'username', 'password', 'name', 'age')
+				.first()
+		);
 	},
 	hashPass: function(password, saltNum) {
 		return bcrypt.hashSync(password, saltNum);
