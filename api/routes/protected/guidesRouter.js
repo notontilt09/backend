@@ -17,14 +17,14 @@ router.get('/:guideId', async (req, res) => {
 	}
 });
 
-router.get('/all', async (req, res) => {
-	try {
-		const guides = await getUsers();
-		res.status(200).json(guides);
-	} catch (err) {
-		res.status(500).json(err);
-	}
-});
+// router.get('/all', async (req, res) => {
+// 	try {
+// 		const guides = await getUsers();
+// 		res.status(200).json(guides);
+// 	} catch (err) {
+// 		res.status(500).json(err);
+// 	}
+// });
 
 router.put('/update/:guideId', async (req, res) => {
 	const { guideId } = req.params;

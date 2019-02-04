@@ -1,30 +1,495 @@
-## guidr endpoints
+# guidr table schema
 
 ---
 
-## PROTECTED ROUTES
+<!-- GET /user/guides/all (returns all guides) -->
+
+## **PROTECTED ROUTES**
+
+---
+
+### Headers (for all protected routes)
+
+---
+
+| name            | type   | required | description                    |
+| --------------- | ------ | -------- | ------------------------------ |
+| `Authorization` | String | Yes      | Bearer JWT authorization token |
 
 ---
 
 ## Guide Routes
 
-GET /user/guides/:guideId (returns specific guide)
-GET /user/guides/all (returns all guides)
-PUT /user/guides/update/:guideId (returns number of updated guides)
+---
+
+### **GET USER**
+
+#### Gets specific user by id
+
+_Method Url:_ `/user/guides/:guideId`
+_HTTP method:_ **_[GET]_**
+
+#### Response
+
+##### 200 (OK)
+
+> If you successfully fetch the user, the endpoint will return an HTTP response with a status code `200` and a body as below.
+
+```
+{
+      "id": 1,
+    "username": "sjoskowitz0",
+    "password": "$2a$14$0db0iQaspO6hIHtFq6Lj1.jAwXpMWSuF37s7eQ5uWNvl8eO4DzgXi",
+    "name": "Stephannie Joskowitz",
+    "age": 29,
+    "title": "Expert Guide",
+    "tagline": "I'm the best guide this side of the Mississippi",
+    "careerLength": "12 years"
+}
+```
+
+##### 400 (Bad Request)
+
+> If you send in invalid fields or the password of the user corresponding to the token does not match the currentPassword field, the endpoint will return an HTTP response with a status code `400` and a body as below.
+
+```
+{
+    "error": "That user does not exist"
+}
+```
+
+---
+
+### **UPDATE USER**
+
+#### Updates specified user object
+
+_Method Url:_ `/user/guides/update/:guideId`
+_HTTP method:_ **_[PUT]_**
+
+#### Body
+
+| name           | type   | required | description                |
+| -------------- | ------ | -------- | -------------------------- |
+| `name`         | String | No       | Guide's name               |
+| `age`          | Int    | No       | Age of guide               |
+| `tagline`      | String | No       | Short description of guide |
+| `title`        | String | No       | Job title                  |
+| `careerLength` | String | No       | Amount of time as guide    |
+
+_example:_
+
+```
+{
+	"tagline": "I'm the best guide this side of the Mississippi",
+	"careerLength": "12 years",
+	"age": 29
+}
+```
+
+#### Response
+
+##### 200 (OK)
+
+> If you successfully update the user, the endpoint will return an HTTP response with a status code `200` and a body as below.
+
+```
+1
+```
+
+##### 500 (Bad Request)
+
+> If you send in invalid fields, the endpoint will return an HTTP response with a status code `500` and a body as below.
+
+```
+{
+    "name": "error",
+    "length": 128,
+    "severity": "ERROR",
+    "code": "42703",
+    "position": "70",
+    "file": "analyze.c",
+    "line": "2339",
+    "routine": "transformUpdateTargetList"
+}
+```
+
+##### 400 (Bad Request)
+
+> If you send in an invalid guideId, the endpoint will return an HTTP response with a status code `400` and a body as below.
+
+```
+{
+    "error": "A user with that ID does not exist"
+}
+```
 
 ---
 
 ## Trip Routes
 
-GET /user/trips/:guideId/all (returns users)
-GET /user/trips/:guideId/:tripId (returns one of user's trips)
-PUT /user/trips/:guideId/:tripId (returns number of updated trips)
-POST /user/trips/:guideId/create (returns newly created trip)
-DEL /user/trips/:tripId (return number of trips deleted)
+---
+
+### **GET TRIPS**
+
+#### Gets all trips related to specified guide
+
+_Method Url:_ `/user/trips/:guideId/all`
+_HTTP method:_ **_[GET]_**
+
+#### Response
+
+##### 200 (OK)
+
+> If you successfully fetch the user, the endpoint will return an HTTP response with a status code `200` and a an array of objects as below.
+
+```
+{
+[
+    {
+        "id": 5,
+        "title": "Boy A",
+        "description": "Sweden",
+        "img_url": "http://dummyimage.com/212x139.png/5fa2dd/ffffff"
+    },
+    {
+        "id": 8,
+        "title": "Hotel",
+        "description": "Ecuador",
+        "img_url": "https://images.pexels.com/photos/1840102/pexels-photo-1840102.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+        "id": 11,
+        "title": "Wavelength",
+        "description": "Indonesia",
+        "img_url": "http://dummyimage.com/195x202.png/dddddd/000000"
+    }
+]
+}
+```
+
+##### 404 (Bad Request)
+
+> If you supply an invalid guideId, the endpoint will return an HTTP response with a status code `404` and a body as below.
+
+```
+{
+    "error": "A guide with that ID does not exist"
+}
+```
 
 ---
 
-## AUTH ROUTES
+### **GET TRIP**
 
-POST /auth/login
-POST /auth/register
+#### Get's specific trip, linked to specified guideId
+
+_Method Url:_ `/user/trips/:guideId/:tripId`
+_HTTP method:_ **_[GET]_**
+
+#### Response
+
+##### 200 (OK)
+
+> If you successfully fetch the user, the endpoint will return an HTTP response with a status code `200` and a an array of objects as below.
+
+```
+{
+    "id": 5,
+    "title": "Boy A",
+    "description": "Sweden",
+    "designation": "Professional",
+    "type": "Skellefteå",
+    "duration": "4 days",
+    "guide_id": 1,
+    "img_url": "http://dummyimage.com/212x139.png/5fa2dd/ffffff"
+}
+```
+
+##### 400 (Bad Request)
+
+> If you supply an invalid tripId or guideId, the endpoint will return an HTTP response with a status code `404` and a body as below.
+
+```
+{
+    "error": "A trip with that ID does not exist for the specified user"
+}
+```
+
+---
+
+### **UPDATE TRIP**
+
+#### Update's a specific trip
+
+_Method Url:_ `/user/trips/:guideId/:tripId`
+_HTTP method:_ **_[PUT]_**
+
+#### Body
+
+| name          | type   | required | description             |
+| ------------- | ------ | -------- | ----------------------- |
+| `title`       | String | No       | Guide's name            |
+| `description` | String | No       | Age of guide            |
+| `designation` | String | No       | Professional or Private |
+| `type`        | String | No       | Category of trip        |
+| `duration`    | String | No       | Trip duration           |
+| `img_url`     | String | No       | Image related to trip   |
+
+_example:_
+
+```
+{
+	"title": "Norwegian Polar Trek",
+	"description": "Go north to find the beauty and harsh reality of the frozen tundra inside the Arctic Circle in Norway",
+	"duration": "14 days",
+	"type": "Cross-country skiing, winter backpacking/camping"
+}
+```
+
+#### Response
+
+##### 203 (OK)
+
+> If you successfully update the user, the endpoint will return an HTTP response with a status code `200` and a an array of objects as below.
+
+```
+1
+```
+
+##### 404 (Bad Request)
+
+> If you supply an invalid tripId or guideId, the endpoint will return an HTTP response with a status code `404` and a body as below.
+
+```
+{
+    "error": "A trip/user with that ID does not exist"
+}
+```
+
+##### 400 (Invalid Request)
+
+> If you supply valid guideId and tripId but they aren't related, the endpoint will return an HTTP response with a status code `400` and a body as below.
+
+```
+{
+    "error": "You must be the trip's guide to make changes to this trip"
+}
+```
+
+---
+
+### **CREATE TRIP**
+
+#### Inserts a new trip object
+
+_Method Url:_ `/user/trips/:guideId/create`
+_HTTP method:_ **_[POST]_**
+
+#### Body
+
+| name          | type   | required | description             |
+| ------------- | ------ | -------- | ----------------------- |
+| `title`       | String | Yes      | Guide's name            |
+| `description` | String | Yes      | Age of guide            |
+| `designation` | String | No       | Professional or Private |
+| `type`        | String | Yes      | Category of trip        |
+| `duration`    | String | Yes      | Trip duration           |
+| `img_url`     | String | No       | Image related to trip   |
+| `guide_id`    | Int    | No       | Default's to user's id  |
+
+_example:_
+
+```
+{
+	"title": "Norwegian Polar Trek",
+	"description": "Go north to find the beauty and harsh reality of the frozen tundra inside the Arctic Circle in Norway",
+	"duration": "14 days",
+	"type": "Cross-country skiing, winter backpacking/camping"
+  "img_url": "www.fakeurl.com"
+}
+```
+
+#### Response
+
+##### 201 (SUCCESS)
+
+> If you successfully create the trip, the endpoint will return an HTTP response with a status code `201` and a an object as below.
+
+```
+{
+    "id": 46,
+    "title": "merpp",
+    "description": "This is a test trip again",
+    "designation": "Professional",
+    "type": "Backcountry rock-climbing",
+    "duration": "3.5 days",
+    "guide_id": 1,
+    "img_url": "https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg$1auto=compress&cs=tinysrgb&dpr=2&w=500"
+}
+```
+
+##### 400 (Bad Request)
+
+> If you supply an invalid guideId, the endpoint will return an HTTP response with a status code `400` and a body as below.
+
+```
+{
+    "error": "A user with that ID does not exist"
+}
+```
+
+---
+
+### **DELETE TRIP**
+
+#### Delete trip specified by tripId
+
+_Method Url:_ `/user/trips/:tripId`
+_HTTP method:_ **_[DELETE]_**
+
+#### Response
+
+##### 202 (OK)
+
+> If you successfully delete the trip, the endpoint will return an HTTP response with a status code `202` and a body as below.
+
+```
+1
+```
+
+##### 400 (Bad Request)
+
+> If you send an invalid tripId, the endpoint will return an HTTP response with a status code `400` and a body as below.
+
+```
+{
+    "error": "A trip with that ID does not exist"
+}
+```
+
+---
+
+## **AUTH ROUTES**
+
+---
+
+### **REGISTER USER**
+
+#### Registers a new user
+
+_Method Url:_ `/auth/register`
+_HTTP method:_ **_[POST]_**
+
+#### Body
+
+| name           | type   | required | description                |
+| -------------- | ------ | -------- | -------------------------- |
+| `name`         | String | Yes      | Guide's name (unique)      |
+| `age`          | Int    | No       | Age of guide               |
+| `tagline`      | String | No       | Short description of guide |
+| `title`        | String | No       | Job title                  |
+| `careerLength` | String | No       | Amount of time as guide    |
+| `username`     | String | Yes      | username (unique)          |
+| `password`     | String | Yes      | password                   |
+
+_example:_
+
+```
+{
+	"username": "deploy_test",
+	"password": "newuser",
+	"name": "Mr. Deploy User"
+}
+```
+
+#### Response
+
+##### 201 (OK)
+
+> If you successfully delete the trip, the endpoint will return an HTTP response with a status code `201` and a body as below.
+
+```
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlYWRtZSIsImlhdCI6MTU0OTMyMjk5NSwiZXhwIjoxNTQ5NDA5Mzk1LCJqdGkiOiJndWlkciJ9.YXnh9zGn-TNkfGQ68xCQWJCzLOaYwTx32vEllP4Qtmw",
+    "user": {
+        "id": 50,
+        "username": "readme",
+        "password": "$2a$14$.EI/H6F1U9jbdnlWehX5g.k8Shfx0.lEWeLsRAAGp9ag8wz9IOney",
+        "name": "Miss ReadMe Test",
+        "age": 25,
+        "title": "Expert Guide",
+        "tagline": null,
+        "careerLength": null
+    }
+}
+```
+
+##### 404 (Bad Request)
+
+> If body is missing either password, username or name, the endpoint will return an HTTP response with a status code `404` and a body as below.
+
+```
+{
+    "error": "Please include name, username and password in request"
+}
+```
+
+---
+
+### **Login USER**
+
+#### Logs a user into site
+
+_Method Url:_ `/auth/login`
+_HTTP method:_ **_[POST]_**
+
+#### Body
+
+| name       | type   | required | description       |
+| ---------- | ------ | -------- | ----------------- |
+| `username` | String | Yes      | username (unique) |
+| `password` | String | Yes      | password          |
+
+_example:_
+
+```
+{
+	"username": "test",
+	"password": "brap"
+}
+```
+
+#### Response
+
+##### 200 (OK)
+
+> If you successfully login, the endpoint will return an HTTP response with a status code `200` and a body as below.
+
+```
+{
+    "user": {
+        "id": 1,
+        "username": "sjoskowitz0",
+        "password": "$2a$14$0db0iQaspO6hIHtFq6Lj1.jAwXpMWSuF37s7eQ5uWNvl8eO4DzgXi",
+        "name": "Stephannie Joskowitz",
+        "age": 29,
+        "title": "Expert Guide",
+        "tagline": "I'm the best guide this side of the Mississippi",
+        "careerLength": "12 years"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNqb3Nrb3dpdHowIiwiaWF0IjoxNTQ5MzIyOTAwLCJleHAiOjE1NDk0MDkzMDAsImp0aSI6Imd1aWRyIn0.tEgYfk6yB7r2hCQyE0sPD84Adri8VoGQVKWRR7rBggM"
+}
+```
+
+##### 4004(Bad Request)
+
+> If you send incorrect credentials, the endpoint will return an HTTP response with a status code `404` and a body as below.
+
+```
+{
+    "err": "A user with those credentials does not exist"
+}
+```
+
+---
