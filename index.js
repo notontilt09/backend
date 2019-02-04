@@ -16,7 +16,7 @@ client.connect();
 // 	client.end();
 // });
 
-console.log(process.env.DB_ENV);
+// console.log(process.env.DB_ENV);
 
 const port = process.env.PORT || 4000;
 

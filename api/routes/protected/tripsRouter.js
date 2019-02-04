@@ -71,8 +71,6 @@ router.post('/:guideId/create', hasCorrectKeys, checkDesignation, async (req, re
 		const newTrip = await getTripByIds(tripId[0], guideId);
 		res.status(201).json(newTrip);
 	} catch (err) {
-		// if (err.errno === 19)
-		// 	return res.status(400).json({ error: 'A trip with that title already exists' });
 		res.status(500).json(err);
 	}
 });
