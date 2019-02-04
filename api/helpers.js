@@ -10,7 +10,7 @@ module.exports.auth = {
 	login: function(user) {
 		return db('guides')
 			.where({ username: user.username })
-			.select('id', 'username', 'password', 'name', 'age', 'careerlength as guide_exp')
+			.select('id', 'username', 'password', 'name', 'age')
 			.first();
 	},
 	hashPass: function(password, saltNum) {
