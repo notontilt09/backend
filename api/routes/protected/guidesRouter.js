@@ -26,11 +26,11 @@ router.get('/all', async (req, res) => {
 	}
 });
 
-router.put('/update/:id', async (req, res) => {
-	const { id } = req.params;
+router.put('/update/:guideId', async (req, res) => {
+	const { guideId } = req.params;
 	const info = req.body;
 	try {
-		const numUpdated = await updateUser(id, info);
+		const numUpdated = await updateUser(guideId, info);
 		if (numUpdated === 0) {
 			res.status(400).json({ error: 'A user with that ID does not exist' });
 		} else {
