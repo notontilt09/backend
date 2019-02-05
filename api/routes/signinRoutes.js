@@ -2,11 +2,11 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { register, login, generateToken, hashPass } = require('../helpers/authHelpers');
 const { getUserById } = require('../helpers/guideHelpers');
-const { register } = require('../middleware');
+const { registerCheck } = require('../middleware');
 
 const router = express.Router();
 
-router.post('/register', register, async (req, res, next) => {
+router.post('/register', registerCheck, async (req, res, next) => {
 	let { password } = req.body;
 	req.body.password = hashPass(password, 14);
 
@@ -31,7 +31,7 @@ router.post('/login', async (req, res, next) => {
 			next({ status: 404, message: 'Check that username and password are both correct' });
 		}
 	} catch (err) {
-		next({ message: 'Fill in both username and password please' }, res);
+		next({ message: err }, res);
 	}
 });
 

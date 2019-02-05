@@ -28,9 +28,7 @@ const registerSchema = Joi.object({
 	careerLength: Joi.string()
 		.optional()
 		.trim(),
-	age: Joi.number()
-		.optional()
-		.trim()
+	age: Joi.number().optional()
 });
 
 module.exports = {
@@ -58,7 +56,7 @@ module.exports = {
 		}
 		next();
 	},
-	register: function(req, res, next) {
+	registerCheck: function(req, res, next) {
 		const { error: err } = registerSchema.validate(req.body, { stripUnknown: true });
 		if (err) {
 			let error = new Error(err.details[0].message);
