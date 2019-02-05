@@ -1,12 +1,8 @@
 # guidr table schema
 
----
-
 <!-- GET /user/guides/all (returns all guides) -->
 
 ## **PROTECTED ROUTES**
-
----
 
 ### Headers (for all protected routes)
 
@@ -24,12 +20,16 @@
 
 ### **GET USER**
 
+---
+
 #### Gets specific user by id
 
 _Method Url:_ `/user/guides/:guideId`
 _HTTP method:_ **_[GET]_**
 
-#### Response
+#### Responses
+
+---
 
 ##### 200 (OK)
 
@@ -62,6 +62,8 @@ _HTTP method:_ **_[GET]_**
 
 ### **UPDATE USER**
 
+---
+
 #### Updates specified user object
 
 _Method Url:_ `/user/guides/update/:guideId`
@@ -87,7 +89,9 @@ _example:_
 }
 ```
 
-#### Response
+#### Responses
+
+---
 
 ##### 200 (OK)
 
@@ -132,12 +136,16 @@ _example:_
 
 ### **GET TRIPS**
 
+---
+
 #### Gets all trips related to specified guide
 
 _Method Url:_ `/user/trips/:guideId/all`
 _HTTP method:_ **_[GET]_**
 
-#### Response
+#### Responses
+
+---
 
 ##### 200 (OK)
 
@@ -182,12 +190,16 @@ _HTTP method:_ **_[GET]_**
 
 ### **GET TRIP**
 
+---
+
 #### Get's specific trip, linked to specified guideId
 
 _Method Url:_ `/user/trips/:guideId/:tripId`
 _HTTP method:_ **_[GET]_**
 
-#### Response
+#### Responses
+
+---
 
 ##### 200 (OK)
 
@@ -220,6 +232,8 @@ _HTTP method:_ **_[GET]_**
 
 ### **UPDATE TRIP**
 
+---
+
 #### Update's a specific trip
 
 _Method Url:_ `/user/trips/:guideId/:tripId`
@@ -247,7 +261,9 @@ _example:_
 }
 ```
 
-#### Response
+#### Responses
+
+---
 
 ##### 203 (OK)
 
@@ -281,6 +297,8 @@ _example:_
 
 ### **CREATE TRIP**
 
+---
+
 #### Inserts a new trip object
 
 _Method Url:_ `/user/trips/:guideId/create`
@@ -310,7 +328,9 @@ _example:_
 }
 ```
 
-#### Response
+#### Responses
+
+---
 
 ##### 201 (SUCCESS)
 
@@ -343,12 +363,16 @@ _example:_
 
 ### **DELETE TRIP**
 
+---
+
 #### Delete trip specified by tripId
 
 _Method Url:_ `/user/trips/:tripId`
 _HTTP method:_ **_[DELETE]_**
 
-#### Response
+#### Responses
+
+---
 
 ##### 202 (OK)
 
@@ -375,6 +399,8 @@ _HTTP method:_ **_[DELETE]_**
 ---
 
 ### **REGISTER USER**
+
+---
 
 #### Registers a new user
 
@@ -403,7 +429,9 @@ _example:_
 }
 ```
 
-#### Response
+#### Responses
+
+---
 
 ##### 201 (OK)
 
@@ -439,6 +467,8 @@ _example:_
 
 ### **Login USER**
 
+---
+
 #### Logs a user into site
 
 _Method Url:_ `/auth/login`
@@ -460,7 +490,9 @@ _example:_
 }
 ```
 
-#### Response
+#### Responses
+
+---
 
 ##### 200 (OK)
 
@@ -482,7 +514,7 @@ _example:_
 }
 ```
 
-##### 4004(Bad Request)
+##### 404(Bad Request)
 
 > If you send incorrect credentials, the endpoint will return an HTTP response with a status code `404` and a body as below.
 
