@@ -473,13 +473,13 @@ _HTTP method:_ **_[POST]_**
 
 | name           | type   | required | description                |
 | -------------- | ------ | -------- | -------------------------- |
+| `username`     | String | Yes      | username (unique)          |
+| `password`     | String | Yes      | password                   |
 | `name`         | String | Yes      | Guide's name (unique)      |
 | `age`          | Int    | No       | Age of guide               |
 | `tagline`      | String | No       | Short description of guide |
 | `title`        | String | No       | Job title                  |
 | `careerLength` | String | No       | Amount of time as guide    |
-| `username`     | String | Yes      | username (unique)          |
-| `password`     | String | Yes      | password                   |
 
 _example:_
 
