@@ -107,7 +107,7 @@ _HTTP method:_ **_[GET]_**
 
 ```
 {
-      "id": 1,
+    "id": 1,
     "username": "sjoskowitz0",
     "password": "$2a$14$0db0iQaspO6hIHtFq6Lj1.jAwXpMWSuF37s7eQ5uWNvl8eO4DzgXi",
     "name": "Stephannie Joskowitz",
@@ -378,13 +378,12 @@ _HTTP method:_ **_[POST]_**
 
 | name          | type   | required | description             |
 | ------------- | ------ | -------- | ----------------------- |
-| `title`       | String | Yes      | Guide's name            |
+| `title`       | String | Yes      | Trip's name (unique)    |
 | `description` | String | Yes      | Age of guide            |
-| `designation` | String | No       | Professional or Private |
 | `type`        | String | Yes      | Category of trip        |
 | `duration`    | String | Yes      | Trip duration           |
+| `designation` | String | No       | Professional or Private |
 | `img_url`     | String | No       | Image related to trip   |
-| `guide_id`    | Int    | No       | Default's to user's id  |
 
 _example:_
 
@@ -404,18 +403,11 @@ _example:_
 
 ##### 201 (SUCCESS)
 
-> If you successfully create the trip, the endpoint will return an HTTP response with a status code `201` and a an object as below.
+> If you successfully create the trip, the endpoint will return an HTTP response with a status code `201` and the id of the newly created trip as below.
 
 ```
 {
-    "id": 46,
-    "title": "merpp",
-    "description": "This is a test trip again",
-    "designation": "Professional",
-    "type": "Backcountry rock-climbing",
-    "duration": "3.5 days",
-    "guide_id": 1,
-    "img_url": "https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg$1auto=compress&cs=tinysrgb&dpr=2&w=500"
+11
 }
 ```
 
@@ -509,17 +501,8 @@ _example:_
 
 ```
 {
+    "id": 50,
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlYWRtZSIsImlhdCI6MTU0OTMyMjk5NSwiZXhwIjoxNTQ5NDA5Mzk1LCJqdGkiOiJndWlkciJ9.YXnh9zGn-TNkfGQ68xCQWJCzLOaYwTx32vEllP4Qtmw",
-    "user": {
-        "id": 50,
-        "username": "readme",
-        "password": "$2a$14$.EI/H6F1U9jbdnlWehX5g.k8Shfx0.lEWeLsRAAGp9ag8wz9IOney",
-        "name": "Miss ReadMe Test",
-        "age": 25,
-        "title": "Expert Guide",
-        "tagline": null,
-        "careerLength": null
-    }
 }
 ```
 
@@ -570,16 +553,7 @@ _example:_
 
 ```
 {
-    "user": {
-        "id": 1,
-        "username": "sjoskowitz0",
-        "password": "$2a$14$0db0iQaspO6hIHtFq6Lj1.jAwXpMWSuF37s7eQ5uWNvl8eO4DzgXi",
-        "name": "Stephannie Joskowitz",
-        "age": 29,
-        "title": "Expert Guide",
-        "tagline": "I'm the best guide this side of the Mississippi",
-        "careerLength": "12 years"
-    },
+    "id": 1,
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNqb3Nrb3dpdHowIiwiaWF0IjoxNTQ5MzIyOTAwLCJleHAiOjE1NDk0MDkzMDAsImp0aSI6Imd1aWRyIn0.tEgYfk6yB7r2hCQyE0sPD84Adri8VoGQVKWRR7rBggM"
 }
 ```
