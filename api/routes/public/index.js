@@ -1,8 +1,6 @@
 const express = require('express');
-const {
-	user: { getUsers },
-	trip: { getPublicTrips }
-} = require('../../helpers');
+const { getPublicTrips } = require('../../helpers/tripHelpers');
+const { getUsers } = require('../../helpers/guideHelpers');
 
 const router = express.Router();
 

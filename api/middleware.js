@@ -1,7 +1,4 @@
-const {
-	auth: { decodeToken }
-} = require('./helpers');
-
+const { decodeToken } = require('./helpers/authHelpers');
 
 module.exports = {
 	verifyAuth: function(req, res, next) {

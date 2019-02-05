@@ -1,10 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-
-const {
-	user: { getUserById },
-	auth: { register, login, generateToken, hashPass }
-} = require('../helpers');
+const { register, login, generateToken, hashPass } = require('../helpers/authHelpers');
+const { getUserById } = require('../helpers/guideHelpers');
 
 const router = express.Router();
 

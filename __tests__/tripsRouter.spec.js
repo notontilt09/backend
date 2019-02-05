@@ -1,8 +1,10 @@
 const request = require('supertest');
 const server = require('../api/server');
-const {
-	trip: { getById, getTripsByUser, getTripByIds, updateTrip, deleteTrip, createTrip }
-} = require('../api/helpers');
+const { getTripsByUser, getTripByIds } = require('../api/helpers/tripHelpers');
+
+// const {
+// 	trip: { getById, getTripsByUser, getTripByIds, updateTrip, deleteTrip, createTrip }
+// } = require('../api/helpers');
 
 var token;
 

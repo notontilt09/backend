@@ -1,9 +1,12 @@
 const request = require('supertest');
 
-const {
-	auth: { register, login, decodeToken },
-	user: { getUserById, getUsers }
-} = require('../api/helpers');
+const { decodeToken } = require('../api/helpers/authHelpers');
+const { getUsers } = require('../api/helpers/guideHelpers');
+
+// const {
+// 	auth: { register, login, decodeToken },
+// 	user: { getUserById, getUsers }
+// } = require('../api/helpers');
 const { guideSeed } = require('../data/seeds/01_users');
 const server = require('../api/server');
 const db = require('../data/dbConfig');

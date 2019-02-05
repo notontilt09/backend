@@ -7,6 +7,7 @@ const { verifyAuth } = require('./middleware');
 const protectedRouter = require('./routes/protected/index');
 const signInRouter = require('./routes/signinRoutes');
 const publicRouter = require('./routes/public/index');
+const errorHandler = require('./helpers/errorHandler');
 
 const server = express();
 
@@ -17,5 +18,6 @@ server.use(cors());
 server.use('/user', verifyAuth, protectedRouter);
 server.use('/auth', signInRouter);
 server.use('/guidr', publicRouter);
+server.use(errorHandler);
 
 module.exports = server;

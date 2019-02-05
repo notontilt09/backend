@@ -1,8 +1,6 @@
 const request = require('supertest');
 const server = require('../api/server');
-const {
-	user: { getUserById }
-} = require('../api/helpers');
+const { getUserById } = require('../api/helpers/guideHelpers');
 
 var token;
 

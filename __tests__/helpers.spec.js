@@ -1,7 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const { auth, user, trip } = require('../api/helpers');
+// const { auth, user, trip } = require('../api/helpers');
+const auth = require('../api/helpers/authHelpers');
+const user = require('../api/helpers/guideHelpers');
+const trip = require('../api/helpers/tripHelpers');
 const { guideSeed } = require('../data/seeds/01_users');
 const { tripSeed } = require('../data/seeds/02_trips');
 const db = require('../data/dbConfig');

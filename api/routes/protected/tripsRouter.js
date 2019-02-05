@@ -1,8 +1,13 @@
 const express = require('express');
 const {
-	user: { getUserById },
-	trip: { getTripsByUser, getTripByIds, getById, updateTrip, deleteTrip, createTrip, getTrips }
-} = require('../../helpers');
+	getTripsByUser,
+	getTripByIds,
+	getById,
+	updateTrip,
+	deleteTrip,
+	createTrip
+} = require('../../helpers/tripHelpers');
+const { getUserById } = require('../../helpers/guideHelpers');
 const { hasCorrectKeys, checkDesignation } = require('../../middleware');
 
 const router = express.Router();
