@@ -25,7 +25,7 @@ module.exports = {
 			username: user.username
 		};
 		const options = {
-			expiresIn: '24h',
+			expiresIn: '48h',
 			jwtid: 'guidr'
 		};
 		return jwt.sign(payload, secret, options);
