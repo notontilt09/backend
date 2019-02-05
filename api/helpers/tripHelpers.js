@@ -1,6 +1,6 @@
 const db = require('../../data/dbConfig');
 
-module.exports.trip = {
+module.exports = {
 	getTrips: function() {
 		return db('trips');
 	},

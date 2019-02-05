@@ -1,4 +1,28 @@
 const { decodeToken } = require('./helpers/authHelpers');
+const Joi = require('joi');
+
+const schema = Joi.object({
+	description: Joi.string()
+		.required()
+		.trim(),
+	title: Joi.string()
+		.required()
+		.trim(),
+	duration: Joi.string().required(),
+	type: Joi.string().required()
+});
+
+// module.exports = function (req, res, next) {
+//   const { error: err } = schema.validate(req.body, { stripUnknown: true });
+
+//   if (err) {
+//     let error = new Error(err.details[0].message);
+//     error.status = 400;
+//     return next(error);
+//   }
+
+//   next();
+// };
 
 module.exports = {
 	verifyAuth: function(req, res, next) {
@@ -17,16 +41,27 @@ module.exports = {
 		}
 	},
 	hasCorrectKeys: function(req, res, next) {
-		const trip = req.body;
+		const { error: err } = schema.validate(req.body, { stripUnknown: true });
 
-		if (!trip.description || !trip.title || !trip.duration || !trip.type) {
-			return res
-				.status(404)
-				.json({ error: 'New trips must have title, description, type and duration' });
-		} else {
-			next();
+		if (err) {
+			let error = new Error(err.details[0].message);
+			error.status = 400;
+			return next(error);
 		}
+
+		next();
 	},
+	// hasCorrectKeys: function(req, res, next) {
+	// 	const trip = req.body;
+
+	// 	if (!trip.description || !trip.title || !trip.duration || !trip.type) {
+	// 		return res
+	// 			.status(404)
+	// 			.json({ error: 'New trips must have title, description, type and duration' });
+	// 	} else {
+	// 		next();
+	// 	}
+	// },
 	checkDesignation: function(req, res, next) {
 		if (req.body.designation) {
 			const { designation } = req.body;

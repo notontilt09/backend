@@ -14,14 +14,17 @@ const router = express.Router();
 
 router.get('/:guideId/all', async (req, res) => {
 	const { guideId } = req.params;
+	console.log(guideId);
 	try {
 		const trips = await getTripsByUser(guideId);
+		console.log(trips);
 		if (trips.length === 0) {
 			res.status(404).json({ error: 'There are no trips for this guide ID' });
 		} else {
 			res.status(200).json(trips);
 		}
 	} catch (err) {
+		console.log(err);
 		res.status(500).json(err);
 	}
 });
