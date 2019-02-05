@@ -12,7 +12,7 @@ router.get('/:guideId/all', async (req, res) => {
 	try {
 		const trips = await getTripsByUser(guideId);
 		if (trips.length === 0) {
-			res.status(404).json({ error: 'A guide with that ID does not exist' });
+			res.status(404).json({ error: 'There are no trips for this guide ID' });
 		} else {
 			res.status(200).json(trips);
 		}
