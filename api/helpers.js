@@ -46,7 +46,7 @@ module.exports.auth = {
 
 module.exports.user = {
 	getUsers: function() {
-		return db('guides').select('id', 'name', 'tagline', 'age', 'title', 'careerlength');
+		return db('guides').select('id', 'name', 'tagline', 'age', 'title', 'careerLength');
 	},
 	getUserById: function(id) {
 		return db('guides')
@@ -58,9 +58,6 @@ module.exports.user = {
 			.where({ id })
 			.update(info);
 	}
-	// deleteUser: function(id) {
-	//   return db('guides').where({id}).del()
-	// }
 };
 
 module.exports.trip = {
