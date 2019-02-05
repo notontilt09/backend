@@ -57,6 +57,11 @@ module.exports.user = {
 		return db('guides')
 			.where({ id })
 			.update(info);
+	},
+	deleteUser: function(id) {
+		return db('guides')
+			.where({ id })
+			.del();
 	}
 };
 
