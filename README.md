@@ -248,11 +248,11 @@ _HTTP method:_ **_[GET]_**
 
 ##### 404 (Bad Request)
 
-> If you supply an invalid guideId, the endpoint will return an HTTP response with a status code `404` and a body as below.
+> If you supply an invalid guideId or the guide has no trips, the endpoint will return an HTTP response with a status code `404` and a body as below.
 
 ```
 {
-    "error": "A guide with that ID does not exist"
+    "error": "There are no trips for this guideId"
 }
 ```
 
