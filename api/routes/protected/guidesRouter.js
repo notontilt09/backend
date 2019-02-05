@@ -23,8 +23,7 @@ router.put('/update/:guideId', async (req, res) => {
 		if (numUpdated === 0) {
 			res.status(400).json({ error: 'A user with that ID does not exist' });
 		} else {
-			const guide = await getUserById(guideId);
-			res.status(200).json(guide);
+			res.status(200).json(numUpdated);
 		}
 	} catch (err) {
 		// postgres errorhandler

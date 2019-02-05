@@ -57,8 +57,8 @@ router.put('/:guideId/:tripId', async (req, res) => {
 		}
 
 		const success = await updateTrip(tripId, updates);
-		const newTrip = await getById(tripId);
-		res.status(203).json(newTrip);
+		// const newTrip = await getById(tripId);
+		res.status(203).json(success);
 	} catch (err) {
 		res.status(500).json(err);
 	}
