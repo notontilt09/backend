@@ -46,7 +46,14 @@ module.exports.auth = {
 
 module.exports.user = {
 	getUsers: function() {
-		return db('guides');
+		return db('guides').select(
+			'id',
+			'name',
+			'tagline',
+			'age',
+			'title',
+			'careerlength as experience'
+		);
 	},
 	getUserById: function(id) {
 		return db('guides')
@@ -66,6 +73,9 @@ module.exports.user = {
 module.exports.trip = {
 	getTrips: function() {
 		return db('trips');
+	},
+	getPublicTrips: function() {
+		return db('trips').where({ designation: 'Professional' });
 	},
 	getById: function(id) {
 		return db('trips')
