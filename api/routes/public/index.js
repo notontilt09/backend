@@ -4,21 +4,21 @@ const { getUsers } = require('../../helpers/guideHelpers');
 
 const router = express.Router();
 
-router.get('/trips/all', async (req, res) => {
+router.get('/trips/all', async (req, res, next) => {
 	try {
 		const allTrips = await getPublicTrips();
 		res.status(200).json(allTrips);
 	} catch (err) {
-		res.status(500).json(err);
+		next({ message: err }, res);
 	}
 });
 
-router.get('/guides/all', async (req, res) => {
+router.get('/guides/all', async (req, res, next) => {
 	try {
 		const guides = await getUsers();
 		res.status(200).json(guides);
 	} catch (err) {
-		res.status(500).json(err);
+		next({ message: err }, res);
 	}
 });
 
