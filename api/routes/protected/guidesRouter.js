@@ -38,7 +38,11 @@ router.put('/update/:guideId', async (req, res) => {
 		}
 	} catch (err) {
 		//shouldn't ever reach this error unless server is unreachable
-		res.status(500).json(err);
+		if (err.code === 42703) {
+			res.status(400).json({ error: 'Unrecognized key in update object' });
+		} else {
+			res.status(500).json(err);
+		}
 	}
 });
 
