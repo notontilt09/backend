@@ -46,14 +46,7 @@ module.exports.auth = {
 
 module.exports.user = {
 	getUsers: function() {
-		return db('guides').select(
-			'id',
-			'name',
-			'tagline',
-			'age',
-			'title',
-			'careerlength as experience'
-		);
+		return db('guides').select('id', 'name', 'tagline', 'age', 'title', 'careerlength');
 	},
 	getUserById: function(id) {
 		return db('guides')
