@@ -1,7 +1,7 @@
 const express = require('express');
 const {
 	user: { getUserById },
-	trip: { getTripsByUser, getTripByIds, getById, updateTrip, deleteTrip, createTrip }
+	trip: { getTripsByUser, getTripByIds, getById, updateTrip, deleteTrip, createTrip, getTrips }
 } = require('../../helpers');
 const { hasCorrectKeys, checkDesignation } = require('../../middleware');
 
