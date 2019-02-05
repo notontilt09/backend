@@ -16,8 +16,7 @@ router.post('/register', async (req, res) => {
 		const ids = await register(req.body);
 		const user = await getUserById(ids[0]);
 		const token = generateToken(user);
-
-		res.status(201).json({ token, user });
+		res.status(201).json({ token, id: ids[0] });
 	} catch (err) {
 		res.status(500).json(err);
 	}
@@ -31,7 +30,7 @@ router.post('/login', async (req, res) => {
 
 		if (user && bcrypt.compareSync(creds.password, user.password)) {
 			const token = generateToken(user);
-			res.status(200).json({ user, token });
+			res.status(200).json({ token, id: user.id });
 		}
 	} catch (err) {
 		res.status(500).json({ error: 'Fill in both username and password please' });

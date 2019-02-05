@@ -5,7 +5,11 @@ const db = require('../data/dbConfig');
 
 module.exports.auth = {
 	register: function(user) {
-		return db('guides').insert(user, 'id');
+		if (process.env.DB_ENV === 'testing') {
+			return db('guides').insert(user);
+		} else {
+			return db('guides').insert(user, 'id');
+		}
 	},
 	login: function(user) {
 		return db('guides')
