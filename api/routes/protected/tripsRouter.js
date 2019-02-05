@@ -52,8 +52,8 @@ router.put('/:guideId/:tripId', async (req, res, next) => {
 		const trip = await getById(tripId);
 		const connection = await getTripByIds(tripId, guideId);
 
-		if (!user) next({ ...error, message: 'A user with that iD does not exist' }, res);
-		if (!trip) next({ ...error, message: 'A trip with that ID does not exist' }, res);
+		if (!user) next({ status: 404, message: 'A user with that iD does not exist' }, res);
+		if (!trip) next({ status: 404, message: 'A trip with that ID does not exist' }, res);
 		if (!connection) {
 			(error.status = 400), (error.message = "You must be the trip's guide to make changes");
 			next(error, res);

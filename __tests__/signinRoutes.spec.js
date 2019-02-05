@@ -2,12 +2,7 @@ const request = require('supertest');
 
 const { decodeToken } = require('../api/helpers/authHelpers');
 const { getUsers } = require('../api/helpers/guideHelpers');
-
-// const {
-// 	auth: { register, login, decodeToken },
-// 	user: { getUserById, getUsers }
-// } = require('../api/helpers');
-const { guideSeed } = require('../data/seeds/01_users');
+const { guideSeed } = require('../data/seeds/01_users.js');
 const server = require('../api/server');
 const db = require('../data/dbConfig');
 
@@ -54,13 +49,9 @@ describe('Sign In Route Tests (/auth routes)', () => {
 				.post('/auth/register')
 				.send(user);
 			const decoded = await decodeToken(response.body.token);
-			const expectedUser = await db('guides')
-				.where({ id: lastId + 1 })
-				.first();
 
 			expect(response.body).toBeTruthy();
-			expect(response.body.user.id).toEqual(lastId + 1);
-			expect(response.body.user.username).toEqual(expectedUser.username);
+			expect(response.body.id).toEqual(lastId + 1);
 			expect(decoded.username).toEqual(user.username);
 		});
 	});
@@ -90,12 +81,12 @@ describe('Sign In Route Tests (/auth routes)', () => {
 			const response = await request(server)
 				.post('/auth/login')
 				.send(guide);
-			const { token, user } = response.body;
+			const { token, id } = response.body;
 
 			expect(token).toBeTruthy();
-			expect(user.id).toBe(1);
-			expect(user.username).toEqual(guide.username);
-			expect(user.name).toBe(guide.name);
+			expect(id).toBe(1);
+			// expect(user.username).toEqual(guide.username);
+			// expect(user.name).toBe(guide.name);
 		});
 		it('should send 404 for incorrect username', async () => {
 			const fail = { password: '850RKI7uKgC', username: 'sjoskowitz1' };

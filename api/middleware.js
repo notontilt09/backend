@@ -51,7 +51,7 @@ module.exports = {
 		const { error: err } = tripSchema.validate(req.body, { stripUnknown: true });
 		if (err) {
 			let error = new Error(err.details[0].message);
-			error.status = 400;
+			error.status = 404;
 			return next(error);
 		}
 		next();

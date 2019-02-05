@@ -1,6 +1,4 @@
-const {
-	auth: { hashPass }
-} = require('../../api/helpers');
+const { hashPass } = require('../../api/helpers/authHelpers');
 
 // array of unhashed passwords, each index corresponds to guide object at same index in guides arr (guides[0].password = passArr[0])
 // passwords are hashed/salted with bcrypt before being seeded for ease of use

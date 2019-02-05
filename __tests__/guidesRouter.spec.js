@@ -14,13 +14,6 @@ beforeAll(async () => {
 	token = response.body.token;
 });
 
-// afterAll(async () => {
-// 	await request(server)
-// 		.put(`/user/guides/update/${1}`)
-// 		.set('authorization', token)
-// 		.send({ name: 'Stephannie Joskowitz' });
-// });
-
 describe('Guide router tests (/user routes)', () => {
 	describe('PUT /user/update/:id route', () => {
 		it('should send back 200 status code for success', async () => {

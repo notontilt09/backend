@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// const { auth, user, trip } = require('../api/helpers');
 const auth = require('../api/helpers/authHelpers');
 const user = require('../api/helpers/guideHelpers');
 const trip = require('../api/helpers/tripHelpers');
@@ -70,7 +69,7 @@ describe('helper function tests', () => {
 				username: 'testerrrr'
 			};
 			const options = {
-				expiresIn: '24h',
+				expiresIn: '48h',
 				jwtid: 'guidr'
 			};
 
