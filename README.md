@@ -2,6 +2,76 @@
 
 <!-- GET /user/guides/all (returns all guides) -->
 
+## **PUBLIC ROUTES**
+
+### Headers
+
+No headers needed
+
+---
+
+### **GET GUIDES**
+
+---
+
+#### Fetches all guides' public info
+
+_Method Url:_ `/guidr/guides/all`
+_HTTP method:_ **_[GET]_**
+
+#### Responses
+
+---
+
+##### 200 (OK)
+
+> If you successfully fetch the guides, the endpoint will return an HTTP response with a status code `200` and a array of objects as below.
+
+```
+{
+    "id": 1,
+    "name": "Stephannie Joskowitz",
+    "tagline": "Aliquam nec pellentesque erat. Nam tristique et tellus quis rutrum. Suspendisse potenti. Mauris arcu neque, feugiat eu ex eu, dapibus dignissim augue. Integer nec augue velit. Donec sit amet neque cursus, tempus turpis vel, sodales libero.",
+    "age": 34,
+    "title": "Expert Guide",
+    "careerLength": "3 years"
+}
+```
+
+---
+
+### **GET TRIPS**
+
+---
+
+#### Fetches all trips (that are designated Professional)
+
+_Method Url:_ `/guidr/trips/all`
+_HTTP method:_ **_[GET]_**
+
+#### Responses
+
+---
+
+##### 200 (OK)
+
+> If you successfully fetch the guides, the endpoint will return an HTTP response with a status code `200` and a array of objects as below.
+
+```
+{
+    "id": 2,
+    "title": "Horse Rebellion",
+    "description": "Tough Russian Mountain Escape",
+    "designation": "Professional",
+    "type": "Valuyki",
+    "duration": "2 days",
+    "guide_id": 6,
+    "img_url": "https://images.pexels.com/photos/1840102/pexels-photo-1840102.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "created_at": "2019-02-05T17:59:09.590Z",
+    "updated_at": "2019-02-05T17:59:09.590Z"
+}
+```
+
 ## **PROTECTED ROUTES**
 
 ### Headers (for all protected routes)
