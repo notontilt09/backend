@@ -1,7 +1,5 @@
 # guidr table schema
 
-<!-- GET /user/guides/all (returns all guides) -->
-
 ## **PUBLIC ROUTES**
 
 ### Headers
