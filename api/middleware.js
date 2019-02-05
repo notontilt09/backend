@@ -1,7 +1,7 @@
 const { decodeToken } = require('./helpers/authHelpers');
 const Joi = require('joi');
 
-const schema = Joi.object({
+const tripSchema = Joi.object({
 	description: Joi.string()
 		.required()
 		.trim(),
@@ -12,17 +12,26 @@ const schema = Joi.object({
 	type: Joi.string().required()
 });
 
-// module.exports = function (req, res, next) {
-//   const { error: err } = schema.validate(req.body, { stripUnknown: true });
-
-//   if (err) {
-//     let error = new Error(err.details[0].message);
-//     error.status = 400;
-//     return next(error);
-//   }
-
-//   next();
-// };
+const registerSchema = Joi.object({
+	username: Joi.string()
+		.required()
+		.trim(),
+	password: Joi.string()
+		.required()
+		.trim(),
+	name: Joi.string()
+		.required()
+		.trim(),
+	tagline: Joi.string()
+		.optional()
+		.trim(),
+	careerLength: Joi.string()
+		.optional()
+		.trim(),
+	age: Joi.number()
+		.optional()
+		.trim()
+});
 
 module.exports = {
 	verifyAuth: function(req, res, next) {
@@ -41,27 +50,23 @@ module.exports = {
 		}
 	},
 	hasCorrectKeys: function(req, res, next) {
-		const { error: err } = schema.validate(req.body, { stripUnknown: true });
-
+		const { error: err } = tripSchema.validate(req.body, { stripUnknown: true });
 		if (err) {
 			let error = new Error(err.details[0].message);
 			error.status = 400;
 			return next(error);
 		}
-
 		next();
 	},
-	// hasCorrectKeys: function(req, res, next) {
-	// 	const trip = req.body;
-
-	// 	if (!trip.description || !trip.title || !trip.duration || !trip.type) {
-	// 		return res
-	// 			.status(404)
-	// 			.json({ error: 'New trips must have title, description, type and duration' });
-	// 	} else {
-	// 		next();
-	// 	}
-	// },
+	register: function(req, res, next) {
+		const { error: err } = registerSchema.validate(req.body, { stripUnknown: true });
+		if (err) {
+			let error = new Error(err.details[0].message);
+			error.status = 400;
+			return next(error);
+		}
+		next();
+	},
 	checkDesignation: function(req, res, next) {
 		if (req.body.designation) {
 			const { designation } = req.body;

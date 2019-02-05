@@ -2,10 +2,11 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { register, login, generateToken, hashPass } = require('../helpers/authHelpers');
 const { getUserById } = require('../helpers/guideHelpers');
+const { register } = require('../middleware');
 
 const router = express.Router();
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', register, async (req, res, next) => {
 	let { password } = req.body;
 	req.body.password = hashPass(password, 14);
 
