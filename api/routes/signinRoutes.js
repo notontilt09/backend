@@ -23,15 +23,14 @@ router.post('/login', async (req, res, next) => {
 	const creds = req.body;
 	try {
 		const user = await login(creds);
-		if (!user) next({ status: 404, message: 'A user with those credentials does not exist' }, res);
-
 		if (user && bcrypt.compareSync(creds.password, user.password)) {
 			const token = generateToken(user);
 			res.status(200).json({ token, id: user.id });
+		} else {
+			next({ status: 404, message: 'Check that username and password are both correct' });
 		}
 	} catch (err) {
 		next({ message: 'Fill in both username and password please' }, res);
-		// res.status(500).json({ error: 'Fill in both username and password please' });
 	}
 });
 

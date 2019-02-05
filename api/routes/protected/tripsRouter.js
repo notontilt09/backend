@@ -72,7 +72,7 @@ router.post('/:guideId/create', hasCorrectKeys, checkDesignation, async (req, re
 		const guide = await getUserById(guideId);
 		if (!guide) next({ ...error, message: 'A user with that ID does not exist' }, res);
 		const tripId = await createTrip({ ...tripInfo, guide_id: guide.id });
-		// const newTrip = await getTripByIds(tripId[0], guideId);
+
 		res.status(201).json(tripId);
 	} catch (err) {
 		next({ message: err }, res);
@@ -86,7 +86,6 @@ router.delete('/:tripId', async (req, res, next) => {
 		if (numberRemoved === 0) {
 			error.message = 'A trip with that id does not exist';
 			next(error, res);
-			// res.status(400).json({ error: 'A trip with that ID does not exist' });
 		} else {
 			res.status(202).json(numberRemoved);
 		}
