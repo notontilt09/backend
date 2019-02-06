@@ -18,13 +18,13 @@ router.get('/:guideId/all', async (req, res, next) => {
 	const { guideId } = req.params;
 	try {
 		const trips = await getTripsByUser(guideId);
-		if (trips.length === 0) {
-			error.status = 404;
-			error.message = 'there are no trips for this guide id';
-			next(error, res);
-		} else {
-			res.status(200).json(trips);
-		}
+		// if (trips.length === 0) {
+		// 	error.status = 404;
+		// 	error.message = 'there are no trips for this guide id';
+		// 	next(error, res);
+		// } else {
+		res.status(200).json(trips);
+		// }
 	} catch (err) {
 		next({ message: err }, res);
 	}
