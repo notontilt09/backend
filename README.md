@@ -383,7 +383,7 @@ _example:_
 	"description": "Go north to find the beauty and harsh reality of the frozen tundra inside the Arctic Circle in Norway",
 	"duration": "14 days",
 	"type": "Cross-country skiing, winter backpacking/camping",
-  "img_url": "www.fakeurl.com"
+    "img_url": "www.fakeimage.com/fakeimage1"
 }
 ```
 
