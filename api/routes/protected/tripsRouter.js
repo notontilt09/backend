@@ -12,19 +12,12 @@ const { getUserById } = require('../../helpers/guideHelpers');
 const { hasCorrectKeys, checkDesignation, typeCoercion } = require('../../middleware');
 
 const router = express.Router();
-let error = { status: 400, message: 'something went wrong' };
 
 router.get('/:guideId/all', async (req, res, next) => {
 	const { guideId } = req.params;
 	try {
 		const trips = await getTripsByUser(guideId);
-		// if (trips.length === 0) {
-		// 	error.status = 404;
-		// 	error.message = 'there are no trips for this guide id';
-		// 	next(error, res);
-		// } else {
 		res.status(200).json(trips);
-		// }
 	} catch (err) {
 		next({ message: err }, res);
 	}
@@ -59,8 +52,7 @@ router.put('/:guideId/:tripId', typeCoercion, async (req, res, next) => {
 		if (!user) next({ status: 404, message: 'A user with that iD does not exist' }, res);
 		if (!trip) next({ status: 404, message: 'A trip with that ID does not exist' }, res);
 		if (!connection) {
-			(error.status = 400), (error.message = "You must be the trip's guide to make changes");
-			next(error, res);
+			next({ status: 400, message: "You must be the trip's guide to make changes" }, res);
 		}
 		const success = await updateTrip(tripId, updates);
 		res.status(203).json(success);
@@ -72,7 +64,7 @@ router.put('/:guideId/:tripId', typeCoercion, async (req, res, next) => {
 router.post('/:tripId/upload', async (req, res, next) => {
 	const { tripId } = req.params;
 	const image = req.body;
-	// if (!image.url) return next({ status: 400, message: 'Please include a url' }, res);
+
 	try {
 		const trip = await getById(tripId);
 		if (!trip) return next({ status: 404, message: 'A trip with that id does not exist' }, res);
@@ -93,9 +85,8 @@ router.post(
 		const tripInfo = req.body;
 		try {
 			const guide = await getUserById(guideId);
-			if (!guide) next({ ...error, message: 'A user with that ID does not exist' }, res);
+			if (!guide) next({ status: 404, message: 'A user with that ID does not exist' }, res);
 			const tripId = await createTrip({ ...tripInfo, guide_id: guide.id });
-
 			res.status(201).json(tripId);
 		} catch (err) {
 			next({ message: err }, res);
@@ -108,8 +99,7 @@ router.delete('/:tripId', async (req, res, next) => {
 	try {
 		const numberRemoved = await deleteTrip(tripId);
 		if (numberRemoved === 0) {
-			error.message = 'A trip with that id does not exist';
-			next(error, res);
+			next({ status: 404, message: 'A trip with that id does not exist' }, res);
 		} else {
 			res.status(202).json(numberRemoved);
 		}
