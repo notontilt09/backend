@@ -17,6 +17,7 @@ router.get('/:guideId/all', async (req, res, next) => {
 	const { guideId } = req.params;
 	try {
 		const trips = await getTripsByUser(guideId);
+		if (trips.legnth === 0) return res.status(404).json(trips);
 		res.status(200).json(trips);
 	} catch (err) {
 		next({ message: err }, res);
@@ -51,7 +52,7 @@ router.put('/:guideId/:tripId', typeCoercion, async (req, res, next) => {
 
 		if (!user) next({ status: 404, message: 'A user with that iD does not exist' }, res);
 		if (!trip) next({ status: 404, message: 'A trip with that ID does not exist' }, res);
-		if (!connection) {
+		if (connection === 'fail') {
 			next({ status: 400, message: "You must be the trip's guide to make changes" }, res);
 		}
 		const success = await updateTrip(tripId, updates);
@@ -85,7 +86,7 @@ router.post(
 		const tripInfo = req.body;
 		try {
 			const guide = await getUserById(guideId);
-			if (!guide) next({ status: 404, message: 'A user with that ID does not exist' }, res);
+			if (!guide) next({ status: 400, message: 'A user with that ID does not exist' }, res);
 			const tripId = await createTrip({ ...tripInfo, guide_id: guide.id });
 			res.status(201).json(tripId);
 		} catch (err) {
@@ -99,7 +100,7 @@ router.delete('/:tripId', async (req, res, next) => {
 	try {
 		const numberRemoved = await deleteTrip(tripId);
 		if (numberRemoved === 0) {
-			next({ status: 404, message: 'A trip with that id does not exist' }, res);
+			next({ status: 400, message: 'A trip with that id does not exist' }, res);
 		} else {
 			res.status(202).json(numberRemoved);
 		}

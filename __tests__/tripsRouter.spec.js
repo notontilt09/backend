@@ -23,14 +23,6 @@ describe('Trips router tests (/trips routes)', () => {
 
 		expect(response.status).toBe(200);
 	});
-	it('should respond with 404 for bad id', async () => {
-		let guideId = 100;
-		const response = await request(server)
-			.get(`/user/trips/${guideId}/all`)
-			.set('authorization', token);
-
-		expect(response.status).toBe(404);
-	});
 	it('should return array of objects', async () => {
 		let guideId = 1;
 		let response = await request(server)
@@ -45,6 +37,7 @@ describe('Trips router tests (/trips routes)', () => {
 			expect(obj.id).toEqual(expected[i].id);
 		});
 	});
+
 	describe('GET /:guideId/:tripId route', () => {
 		it('it should return 200 status for good request', async () => {
 			const guideId = 1;
@@ -55,7 +48,7 @@ describe('Trips router tests (/trips routes)', () => {
 
 			expect(response.status).toBe(200);
 		});
-		it('it should return 404 status for bad tripId or guideId', async () => {
+		it('should return 404 status for bad tripId or guideId', async () => {
 			let guideId = 1;
 			let tripId = 50;
 			let response = await request(server)
@@ -89,7 +82,7 @@ describe('Trips router tests (/trips routes)', () => {
 	});
 
 	describe('PUT /:guideId/:tripId route', () => {
-		it('it should respond with 203 for success', async () => {
+		it('should respond with 203 for success', async () => {
 			let guideId = 1;
 			let tripId = 5;
 			let update = { description: 'wow no way' };
@@ -100,7 +93,7 @@ describe('Trips router tests (/trips routes)', () => {
 
 			expect(response.status).toBe(203);
 		});
-		it('it should respond with 404 for wrong guideId', async () => {
+		it('should respond with 404 for wrong guideId', async () => {
 			let guideId = 111;
 			let tripId = 5;
 			let update = { description: 'wow no way' };
@@ -111,7 +104,7 @@ describe('Trips router tests (/trips routes)', () => {
 
 			expect(response.status).toBe(404);
 		});
-		it('it should respond with 400 for no guide/trip not being linked', async () => {
+		it('should respond with 400 for no guide/trip not being linked', async () => {
 			let guideId = 3;
 			let tripId = 5;
 			let update = { description: 'wow no way' };
@@ -122,7 +115,7 @@ describe('Trips router tests (/trips routes)', () => {
 
 			expect(response.status).toBe(400);
 		});
-		it('it should respond with 404 for wrong tripId', async () => {
+		it('should respond with 404 for wrong tripId', async () => {
 			let guideId = 1;
 			let tripId = 333;
 			let update = { description: 'wow no way' };
