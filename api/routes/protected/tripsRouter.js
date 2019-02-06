@@ -69,7 +69,7 @@ router.put('/:guideId/:tripId', async (req, res, next) => {
 	}
 });
 
-router.post('/upload/:tripId', async (req, res, next) => {
+router.post('/:tripId/upload', async (req, res, next) => {
 	const { tripId } = req.params;
 	const image = req.body;
 	// if (!image.url) return next({ status: 400, message: 'Please include a url' }, res);

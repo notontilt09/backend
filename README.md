@@ -80,11 +80,7 @@ _HTTP method:_ **_[GET]_**
 | --------------- | ------ | -------- | ------------------------------ |
 | `Authorization` | String | Yes      | Bearer JWT authorization token |
 
----
-
 ## Guide Routes
-
----
 
 ### **GET USER**
 
@@ -196,11 +192,7 @@ _example:_
 }
 ```
 
----
-
 ## Trip Routes
-
----
 
 ### **GET TRIPS**
 
@@ -421,6 +413,51 @@ _example:_
 
 ---
 
+#### Inserts a new trip object
+
+_Method Url:_ `/user/trips/:tripId/upload`
+_HTTP method:_ **_[POST]_**
+
+#### Body
+
+| name  | type   | required | description |
+| ----- | ------ | -------- | ----------- |
+| `url` | String | Yes      | Image url   |
+
+_example:_
+
+```
+{
+	"url": "https://images.pexels.com/photos/556416/pexels-photo-556416.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+}
+```
+
+#### Responses
+
+---
+
+##### 201 (SUCCESS)
+
+> If you successfully create the trip, the endpoint will return an HTTP response with a status code `201` and the id of the newly added image as below.
+
+```
+{
+11
+}
+```
+
+##### 400 (Bad Request)
+
+> If you supply an invalid tripId, the endpoint will return an HTTP response with a status code `404` and a body as below.
+
+```
+{
+    "error": "A trip with that id does not exist"
+}
+```
+
+---
+
 ### **DELETE TRIP**
 
 ---
@@ -452,11 +489,7 @@ _HTTP method:_ **_[DELETE]_**
 }
 ```
 
----
-
 ## **AUTH ROUTES**
-
----
 
 ### **REGISTER USER**
 
