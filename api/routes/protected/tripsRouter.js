@@ -9,7 +9,7 @@ const {
 	addImage
 } = require('../../helpers/tripHelpers');
 const { getUserById } = require('../../helpers/guideHelpers');
-const { hasCorrectKeys, checkDesignation } = require('../../middleware');
+const { hasCorrectKeys, checkDesignation, typeCoercion } = require('../../middleware');
 
 const router = express.Router();
 let error = { status: 400, message: 'something went wrong' };
@@ -48,7 +48,7 @@ router.get('/:guideId/:tripId', async (req, res, next) => {
 	}
 });
 
-router.put('/:guideId/:tripId', async (req, res, next) => {
+router.put('/:guideId/:tripId', typeCoercion, async (req, res, next) => {
 	const { tripId, guideId } = req.params;
 	const updates = req.body;
 	try {
@@ -83,19 +83,25 @@ router.post('/:tripId/upload', async (req, res, next) => {
 	}
 });
 
-router.post('/:guideId/create', hasCorrectKeys, checkDesignation, async (req, res, next) => {
-	const { guideId } = req.params;
-	const tripInfo = req.body;
-	try {
-		const guide = await getUserById(guideId);
-		if (!guide) next({ ...error, message: 'A user with that ID does not exist' }, res);
-		const tripId = await createTrip({ ...tripInfo, guide_id: guide.id });
+router.post(
+	'/:guideId/create',
+	hasCorrectKeys,
+	typeCoercion,
+	checkDesignation,
+	async (req, res, next) => {
+		const { guideId } = req.params;
+		const tripInfo = req.body;
+		try {
+			const guide = await getUserById(guideId);
+			if (!guide) next({ ...error, message: 'A user with that ID does not exist' }, res);
+			const tripId = await createTrip({ ...tripInfo, guide_id: guide.id });
 
-		res.status(201).json(tripId);
-	} catch (err) {
-		next({ message: err }, res);
+			res.status(201).json(tripId);
+		} catch (err) {
+			next({ message: err }, res);
+		}
 	}
-});
+);
 
 router.delete('/:tripId', async (req, res, next) => {
 	const { tripId } = req.params;

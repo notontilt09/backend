@@ -15,9 +15,9 @@ exports.up = function(knex, Promise) {
 				.notNullable()
 				.defaultTo('Outdoor adventure!');
 			tbl
-				.string('duration', 128)
-				.notNullable()
-				.defaultTo('3 days');
+				.integer('duration')
+				.unsigned()
+				.notNullable();
 			tbl
 				.string('img_url', 256)
 				.defaultTo(

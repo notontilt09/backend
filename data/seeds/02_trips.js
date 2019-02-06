@@ -5,7 +5,7 @@ const trips = [
 		description: 'China Mountain Ass-Kicking',
 		type: 'Guansheng',
 		guide_id: 10,
-		duration: '10 days',
+		duration: 192,
 		designation: 'Private'
 	},
 	{
@@ -14,7 +14,7 @@ const trips = [
 		description: 'Tough Russian Mountain Escape',
 		type: 'Valuyki',
 		guide_id: 6,
-		duration: '2 days',
+		duration: 48,
 		designation: 'Professional'
 	},
 	{
@@ -23,7 +23,7 @@ const trips = [
 		description: 'Argentina Mountains are the Best',
 		type: 'General Enrique Mosconi',
 		guide_id: 2,
-		duration: '11 days',
+		duration: 36,
 		designation: 'Private'
 	},
 	{
@@ -32,7 +32,7 @@ const trips = [
 		description: 'Greece Mountain trip for a bit',
 		type: 'Aianí',
 		guide_id: 5,
-		duration: '48 hrs',
+		duration: 48,
 		designation: 'Private'
 	},
 	{
@@ -41,7 +41,7 @@ const trips = [
 		description: 'Sweden',
 		type: 'Skellefteå',
 		guide_id: 1,
-		duration: '4 days',
+		duration: 168,
 		designation: 'Professional'
 	},
 	{
@@ -50,7 +50,7 @@ const trips = [
 		description: 'Botswana',
 		type: 'Tonota',
 		guide_id: 3,
-		duration: '1 week',
+		duration: 144,
 		designation: 'Professional'
 	},
 	{
@@ -59,7 +59,7 @@ const trips = [
 		description: 'Argentina',
 		type: 'El Galpón',
 		guide_id: 8,
-		duration: '2 days',
+		duration: 38,
 		designation: 'Professional'
 	},
 	{
@@ -68,7 +68,7 @@ const trips = [
 		description: 'Ecuador',
 		type: 'Huaquillas',
 		guide_id: 1,
-		duration: '36 hrs',
+		duration: 36,
 		designation: 'Professional'
 	},
 	{
@@ -77,47 +77,43 @@ const trips = [
 		description: 'Philippines',
 		type: 'Masaling',
 		guide_id: 10,
-		duration: 'one month',
+		duration: 148,
 		designation: 'Professional'
 	},
 	{
 		id: 10,
 		title: 'Soul Kitchen',
 		description: 'Japan',
-
 		type: 'Tokushima-shi',
 		guide_id: 9,
-		duration: '6 months',
+		duration: 132,
 		designation: 'Private'
 	},
 	{
 		id: 11,
 		title: 'Wavelength',
 		description: 'Indonesia',
-
 		type: 'Juhut',
 		guide_id: 1,
-		duration: '21 days',
+		duration: 120,
 		designation: 'Private'
 	},
 	{
 		id: 12,
 		title: 'Women Robbers (Diebinnen)',
 		description: 'Russia',
-
 		type: 'Rasshevatskaya',
 		guide_id: 5,
-		duration: '72 hrs',
+		duration: 72,
 		designation: 'Private'
 	},
 	{
 		id: 13,
 		title: 'Wanted: Dead or Alive',
 		description: 'Macedonia',
-
 		type: 'Pirava',
 		guide_id: 1,
-		duration: '24 hrs',
+		duration: 24,
 		designation: 'Private'
 	},
 	{
@@ -126,47 +122,43 @@ const trips = [
 		description: 'Ivory Coast',
 		type: 'Adiaké',
 		guide_id: 9,
-		duration: '12 hrs',
+		duration: 12,
 		designation: 'Professional'
 	},
 	{
 		id: 15,
 		title: 'Drained (O cheiro do Ralo)',
 		description: 'Russia',
-
 		type: 'Shipunovo',
 		guide_id: 7,
-		duration: '196 hrs',
+		duration: 196,
 		designation: 'Private'
 	},
 	{
 		id: 16,
 		title: 'Drum',
 		description: 'Philippines',
-
 		type: 'Veruela',
 		guide_id: 2,
-		duration: '2 months',
+		duration: 108,
 		designation: 'Professional'
 	},
 	{
 		id: 17,
 		title: 'Seventh Horse of the Sun  (Suraj Ka Satvan Ghoda)',
 		description: 'Argentina',
-
 		type: 'Achiras',
 		guide_id: 4,
-		duration: '25 days',
+		duration: 96,
 		designation: 'Professional'
 	},
 	{
 		id: 18,
 		title: 'La vérité si je mens !',
 		description: 'China',
-
 		type: 'Baiyun',
 		guide_id: 3,
-		duration: '14 days',
+		duration: 140,
 		designation: 'Professional'
 	},
 	{
@@ -175,7 +167,7 @@ const trips = [
 		description: 'China',
 		type: 'Zhangdu',
 		guide_id: 6,
-		duration: '120 hrs',
+		duration: 120,
 		designation: 'Professional'
 	},
 	{
@@ -184,7 +176,7 @@ const trips = [
 		description: 'China',
 		type: 'Duqu',
 		guide_id: 9,
-		duration: '45 days',
+		duration: 48,
 		designation: 'Professional'
 	},
 	{
@@ -193,7 +185,7 @@ const trips = [
 		description: 'Netherlands',
 		type: 'Schiedam postbusnummers',
 		guide_id: 3,
-		duration: '96 hrs',
+		duration: 60,
 		designation: 'Professional'
 	},
 	{
@@ -202,7 +194,7 @@ const trips = [
 		description: 'Sweden',
 		type: 'Gamleby',
 		guide_id: 1,
-		duration: '5 days',
+		duration: 84,
 		designation: 'Private'
 	},
 	{
@@ -211,7 +203,7 @@ const trips = [
 		description: 'Thailand',
 		type: 'Ban Talat Bueng',
 		guide_id: 10,
-		duration: '8 days',
+		duration: 80,
 		designation: 'Private'
 	},
 	{
@@ -220,7 +212,7 @@ const trips = [
 		description: 'Guatemala',
 		type: 'Cuyotenango',
 		guide_id: 3,
-		duration: '9 days',
+		duration: 100,
 		designation: 'Professional'
 	},
 	{
@@ -238,7 +230,7 @@ const trips = [
 		description: 'Greece',
 		type: 'Rodópoli',
 		guide_id: 6,
-		duration: '100 days',
+		duration: 91,
 		designation: 'Professional'
 	},
 	{
@@ -247,7 +239,7 @@ const trips = [
 		description: 'Ukraine',
 		type: 'Mirovka',
 		guide_id: 6,
-		duration: '31 days',
+		duration: 20,
 		designation: 'Professional'
 	},
 	{
@@ -256,7 +248,7 @@ const trips = [
 		description: 'Denmark',
 		type: 'København',
 		guide_id: 6,
-		duration: '21 days',
+		duration: 34,
 		designation: 'Professional'
 	},
 	{
@@ -265,7 +257,7 @@ const trips = [
 		description: 'China',
 		type: 'Pantian',
 		guide_id: 1,
-		duration: '9 days',
+		duration: 10000,
 		designation: 'Private'
 	},
 	{
@@ -274,7 +266,7 @@ const trips = [
 		description: 'China',
 		type: 'Guodu',
 		guide_id: 1,
-		duration: '4 days',
+		duration: 1000,
 		designation: 'Private'
 	},
 	{
@@ -283,7 +275,7 @@ const trips = [
 		description: 'Chad',
 		type: 'Mao',
 		guide_id: 9,
-		duration: '28 days',
+		duration: 100,
 		designation: 'Professional'
 	},
 	{
@@ -292,7 +284,7 @@ const trips = [
 		description: 'Macedonia',
 		type: 'Bedinje',
 		guide_id: 9,
-		duration: '14 days',
+		duration: 256,
 		designation: 'Professional'
 	},
 	{
@@ -301,7 +293,7 @@ const trips = [
 		description: 'Indonesia',
 		type: 'Ajung',
 		guide_id: 6,
-		duration: '56 days',
+		duration: 164,
 		designation: 'Professional'
 	},
 	{
@@ -310,7 +302,7 @@ const trips = [
 		description: 'Brazil',
 		type: 'Canindé',
 		guide_id: 2,
-		duration: '120 hrs',
+		duration: 72,
 		designation: 'Professional'
 	},
 	{
@@ -319,7 +311,7 @@ const trips = [
 		description: 'United States',
 		type: 'Erie',
 		guide_id: 1,
-		duration: '3.5 days',
+		duration: 48,
 		designation: 'Professional'
 	},
 	{
@@ -328,7 +320,7 @@ const trips = [
 		description: 'China',
 		type: 'Hengshui',
 		guide_id: 6,
-		duration: '4.5 days',
+		duration: 96,
 		designation: 'Private'
 	},
 	{
@@ -337,7 +329,7 @@ const trips = [
 		description: 'Poland',
 		type: 'Polanica-Zdrój',
 		guide_id: 3,
-		duration: '9.5 days',
+		duration: 200,
 		designation: 'Professional'
 	},
 	{
@@ -346,7 +338,7 @@ const trips = [
 		description: 'France',
 		type: 'Martigues',
 		guide_id: 4,
-		duration: '12 days',
+		duration: 128,
 		designation: 'Private'
 	},
 	{
@@ -355,7 +347,7 @@ const trips = [
 		description: 'Philippines',
 		type: 'Guagua',
 		guide_id: 3,
-		duration: '8 months',
+		duration: 96,
 		designation: 'Professional'
 	},
 	{
@@ -364,7 +356,7 @@ const trips = [
 		description: 'Israel',
 		type: 'Metulla',
 		guide_id: 9,
-		duration: '1.5 days',
+		duration: 48,
 		designation: 'Professional'
 	}
 ];
