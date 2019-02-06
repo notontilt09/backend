@@ -1,5 +1,4 @@
 const express = require('express');
-
 const tripsRouter = require('./tripsRouter');
 const guidesRouter = require('./guidesRouter');
 

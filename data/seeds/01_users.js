@@ -1,5 +1,7 @@
-const bcrypt = require('bcryptjs');
+const { hashPass } = require('../../api/helpers/authHelpers');
 
+// array of unhashed passwords, each index corresponds to guide object at same index in guides arr (guides[0].password = passArr[0])
+// passwords are hashed/salted with bcrypt before being seeded for ease of use
 const passArr = [
 	'850RKI7uKgC',
 	'VKVUFwZzfA7J',
@@ -13,7 +15,7 @@ const passArr = [
 	'rxzNHq'
 ];
 
-const guideSeeds = [
+const guides = [
 	{
 		id: 1,
 		name: 'Stephannie Joskowitz',
@@ -87,17 +89,21 @@ const guideSeeds = [
 ];
 
 const taglineDefault =
-	'Aliquam nec pellentesque erat. Nam tristique et tellus quis rutrum. Suspendisse potenti. Mauris arcu neque, feugiat eu ex eu, dapibus dignissim augue. Integer nec augue velit. Donec sit amet neque cursus, tempus turpis vel, sodales libero. Cras id vestibulum velit. Etiam pulvinar commodo ultricies. Quisque quis eros a purus sollicitudin pharetra sit amet ut lectus. Vivamus est sem, finibus non pulvinar sit amet, rutrum sed urna. Mauris viverra ex et dui maximus, at dignissim elit.';
+	'Aliquam nec pellentesque erat. Nam tristique et tellus quis rutrum. Suspendisse potenti. Mauris arcu neque, feugiat eu ex eu, dapibus dignissim augue. Integer nec augue velit. Donec sit amet neque cursus, tempus turpis vel, sodales libero.';
 
-for (let i = 0; i < guideSeeds.length; i++) {
-	guideSeeds[i].password = bcrypt.hashSync(passArr[i], 14);
-	guideSeeds[i].tagline = taglineDefault;
-}
+// hashed passwords and default tagline text are added to each guide object
+const seededGuides = guides.map((guide, i) => {
+	guide.password = hashPass(passArr[i], 14);
+	guide.tagline = taglineDefault;
+	return guide;
+});
 
 exports.seed = function(knex, Promise) {
 	return knex('guides')
-		.truncate()
+		.del()
 		.then(function() {
-			return knex('guides').insert(guideSeeds);
+			return knex('guides').insert(seededGuides);
 		});
 };
+
+module.exports.guideSeed = seededGuides;

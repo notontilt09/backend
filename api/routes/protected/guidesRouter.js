@@ -1,22 +1,37 @@
 const express = require('express');
-const {
-	user: { updateUser }
-} = require('../../helpers');
+const { updateUser, getUserById } = require('../../helpers/guideHelpers');
 
 const router = express.Router();
 
-router.put('/update/:id', async (req, res) => {
-	const { id } = req.params;
+router.get('/:guideId', async (req, res, next) => {
+	const { guideId } = req.params;
+	try {
+		const guide = await getUserById(guideId);
+		return guide
+			? res.status(200).json(guide)
+			: next({ status: 400, message: 'A guide with that id does not exist' });
+	} catch (err) {
+		next({ message: err }, res);
+	}
+});
+
+router.put('/update/:guideId', async (req, res, next) => {
+	const { guideId } = req.params;
 	const info = req.body;
 	try {
-		const numUpdated = await updateUser(id, info);
+		const numUpdated = await updateUser(guideId, info);
 		if (numUpdated === 0) {
-			res.status(400).json({ error: 'A user with that ID does not exist' });
+			next({ status: 400, message: 'A guide with that ID does not exist' });
 		} else {
 			res.status(200).json(numUpdated);
 		}
 	} catch (err) {
-		res.status(500).json(err);
+		// postgres specific errorhandler
+		if (err['code'] === '42703') {
+			next({ status: 400, message: 'Unrecognized key in update object' });
+		} else {
+			next({ message: err }, res);
+		}
 	}
 });
 
