@@ -413,7 +413,11 @@ _example:_
 
 ---
 
-#### Inserts a new trip object
+### **CREATE TRIP IMAGE**
+
+---
+
+#### Inserts a new image object
 
 _Method Url:_ `/user/trips/:tripId/upload`
 _HTTP method:_ **_[POST]_**
