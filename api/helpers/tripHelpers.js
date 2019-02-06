@@ -41,7 +41,7 @@ module.exports = {
 				return comment;
 			});
 
-			let result = { ...trip, images, comments };
+			let result = { ...trip, trip_photos: images, comments };
 			return result;
 		});
 	},
