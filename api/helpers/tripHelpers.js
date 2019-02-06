@@ -57,5 +57,8 @@ module.exports = {
 		return db('trips')
 			.where({ id })
 			.update(info);
+	},
+	addImage: function(image) {
+		return db('images').insert(image, 'id');
 	}
 };

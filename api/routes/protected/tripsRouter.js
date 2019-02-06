@@ -5,7 +5,8 @@ const {
 	getById,
 	updateTrip,
 	deleteTrip,
-	createTrip
+	createTrip,
+	addImage
 } = require('../../helpers/tripHelpers');
 const { getUserById } = require('../../helpers/guideHelpers');
 const { hasCorrectKeys, checkDesignation } = require('../../middleware');
@@ -63,6 +64,20 @@ router.put('/:guideId/:tripId', async (req, res, next) => {
 		}
 		const success = await updateTrip(tripId, updates);
 		res.status(203).json(success);
+	} catch (err) {
+		next({ message: err }, res);
+	}
+});
+
+router.post('/upload/:tripId', async (req, res, next) => {
+	const { tripId } = req.params;
+	const image = req.body;
+	// if (!image.url) return next({ status: 400, message: 'Please include a url' }, res);
+	try {
+		const trip = await getById(tripId);
+		if (!trip) return next({ status: 404, message: 'A trip with that id does not exist' }, res);
+		const id = await addImage({ ...image, trip_id: tripId });
+		res.status(201).json(id);
 	} catch (err) {
 		next({ message: err }, res);
 	}
