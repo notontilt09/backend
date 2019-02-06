@@ -19,17 +19,17 @@ exports.up = function(knex, Promise) {
 				.notNullable()
 				.defaultTo('3 days');
 			tbl
+				.string('img_url', 256)
+				.defaultTo(
+					'https: //images.pexels.com/photos/556416/pexels-photo-556416.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+				);
+			tbl
 				.integer('guide_id')
 				.unsigned()
 				.notNullable()
 				.references('id')
 				.inTable('guides')
 				.onDelete('CASCADE');
-			tbl
-				.string('img_url', 256)
-				.defaultTo(
-					'https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
-				);
 			tbl.timestamp('created_at').defaultTo(knex.fn.now());
 			tbl.timestamp('updated_at').defaultTo(knex.fn.now());
 		})

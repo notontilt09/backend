@@ -18,9 +18,32 @@ module.exports = {
 			.select('id', 'title', 'description', 'img_url');
 	},
 	getTripByIds: function(tripId, guideId) {
-		return db('trips')
-			.where({ id: tripId, guide_id: guideId })
+		const guide = db('guides')
+			.where({ id: guideId })
 			.first();
+		const trip = db('trips')
+			.where({ id: tripId })
+			.first();
+		const images = db('images').where({ trip_id: tripId });
+		const comments = db('comments').where({ trip_id: tripId });
+
+		return Promise.all([trip, images, guide, comments]).then(results => {
+			let [trip, images, guide, comments] = results;
+
+			if (guide === undefined) return [];
+			if (trip === undefined) return null;
+			if (trip.guide_id !== guide.id) return 'fail';
+
+			images = images.map(item => item.url);
+			comments = comments.map(comment => {
+				delete comment.trip_id;
+				delete comment.id;
+				return comment;
+			});
+
+			let result = { ...trip, images, comments };
+			return result;
+		});
 	},
 	createTrip: function(trip) {
 		return db('trips').insert(trip, 'id');

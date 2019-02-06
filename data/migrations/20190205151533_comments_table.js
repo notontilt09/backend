@@ -5,22 +5,15 @@ exports.up = function(knex, Promise) {
 		.createTable('comments', function(tbl) {
 			tbl.increments();
 			tbl
-				.string('user', 128)
-				.notNullable()
-				.references('username')
-				.inTable('guides')
-				.onDelete('CASCADE');
-			tbl
-				.string('name')
+				.string('posted_by', 128)
 				.notNullable()
 				.references('name')
 				.inTable('guides')
 				.onDelete('CASCADE');
 			tbl
-				.integer('age')
-				.unsigned()
-				.references('age')
-				.inTable('guides')
+				.integer('trip_id')
+				.references('id')
+				.inTable('trips')
 				.onDelete('CASCADE');
 			tbl.string('comment_text', 512).notNullable();
 			tbl.timestamp('created_at').defaultTo(knex.fn.now());

@@ -33,9 +33,12 @@ router.get('/:guideId/:tripId', async (req, res, next) => {
 	const { tripId, guideId } = req.params;
 	try {
 		const trip = await getTripByIds(tripId, guideId);
-		if (!trip) {
-			error.message = 'a user with that id does not exist';
-			next(error, req, res);
+		if (trip === 'fail')
+			return next({ status: 400, message: 'That trip is not connected to the specified guide ID' });
+		if (!trip || trip === 0) {
+			return !trip
+				? next({ status: 404, message: 'A trip with that ID does not exist' }, res)
+				: next({ status: 404, message: 'A guide with that ID does not exist' });
 		} else {
 			res.status(200).json(trip);
 		}
