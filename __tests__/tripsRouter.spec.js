@@ -16,9 +16,8 @@ beforeAll(async () => {
 
 describe('Trips router tests (/trips routes)', () => {
 	it('should respond with 200', async () => {
-		let guideId = 1;
 		const response = await request(server)
-			.get(`/user/trips/${guideId}/all`)
+			.get(`/user/trips/all`)
 			.set('authorization', token);
 
 		expect(response.status).toBe(200);
@@ -26,7 +25,7 @@ describe('Trips router tests (/trips routes)', () => {
 	it('should return array of objects', async () => {
 		let guideId = 1;
 		let response = await request(server)
-			.get(`/user/trips/${guideId}/all`)
+			.get(`/user/trips/all`)
 			.set('authorization', token);
 		let expected = await getTripsByUser(guideId);
 
@@ -38,29 +37,26 @@ describe('Trips router tests (/trips routes)', () => {
 		});
 	});
 
-	describe('GET /:guideId/:tripId route', () => {
+	describe('GET /:tripId route', () => {
 		it('it should return 200 status for good request', async () => {
-			const guideId = 1;
 			const tripId = 5;
 			let response = await request(server)
-				.get(`/user/trips/${guideId}/${tripId}`)
+				.get(`/user/trips/${tripId}`)
 				.set('authorization', token);
 
 			expect(response.status).toBe(200);
 		});
 		it('should return 404 status for bad tripId or guideId', async () => {
-			let guideId = 1;
 			let tripId = 50;
 			let response = await request(server)
-				.get(`/user/trips/${guideId}/${tripId}`)
+				.get(`/user/trips/${tripId}`)
 				.set('authorization', token);
 
 			expect(response.status).toBe(404);
 
-			guideId = 9;
 			tripId = 5;
 			esponse = await request(server)
-				.get(`/user/trips/${guideId}/${tripId}`)
+				.get(`/user/trips/${tripId}`)
 				.set('authorization', token);
 
 			expect(response.status).toBe(404);
@@ -69,7 +65,7 @@ describe('Trips router tests (/trips routes)', () => {
 			const guideId = 1;
 			const tripId = 5;
 			let response = await request(server)
-				.get(`/user/trips/${guideId}/${tripId}`)
+				.get(`/user/trips/${tripId}`)
 				.set('authorization', token);
 			let expected = await getTripByIds(tripId, guideId);
 
@@ -81,13 +77,12 @@ describe('Trips router tests (/trips routes)', () => {
 		});
 	});
 
-	describe('PUT /:guideId/:tripId route', () => {
+	describe('PUT /:tripId route', () => {
 		it('should respond with 203 for success', async () => {
-			let guideId = 1;
 			let tripId = 5;
 			let update = { description: 'wow no way' };
 			let response = await request(server)
-				.put(`/user/trips/${guideId}/${tripId}`)
+				.put(`/user/trips/${tripId}`)
 				.set('authorization', token)
 				.send(update);
 
@@ -104,43 +99,29 @@ describe('Trips router tests (/trips routes)', () => {
 
 			expect(response.status).toBe(404);
 		});
-		it('should respond with 400 for no guide/trip not being linked', async () => {
-			let guideId = 3;
-			let tripId = 5;
-			let update = { description: 'wow no way' };
-			let response = await request(server)
-				.put(`/user/trips/${guideId}/${tripId}`)
-				.set('authorization', token)
-				.send(update);
-
-			expect(response.status).toBe(400);
-		});
 		it('should respond with 404 for wrong tripId', async () => {
-			let guideId = 1;
 			let tripId = 333;
 			let update = { description: 'wow no way' };
 			let response = await request(server)
-				.put(`/user/trips/${guideId}/${tripId}`)
+				.put(`/user/trips/${tripId}`)
 				.set('authorization', token)
 				.send(update);
 
 			expect(response.status).toBe(404);
 		});
 		it('should return id of changed trip', async () => {
-			let guideId = 1;
-			let tripId = 5;
+			let tripId = 8;
 			let update = { description: 'wow no way' };
 			let response = await request(server)
-				.put(`/user/trips/${guideId}/${tripId}`)
+				.put(`/user/trips/${tripId}`)
 				.set('authorization', token)
 				.send(update);
 
 			expect(response.body).toBe(1);
 		});
 	});
-	describe('POST /:guideId/create', () => {
+	describe('POST /create', () => {
 		it('should respond with 201 on success', async () => {
-			const guideId = 1;
 			const addTrip = {
 				title: 'testaasdfarossa',
 				description: 'This is a test trip again',
@@ -149,44 +130,26 @@ describe('Trips router tests (/trips routes)', () => {
 				type: 'Backcountry rock-climbing'
 			};
 			let response = await request(server)
-				.post(`/user/trips/${guideId}/create`)
+				.post(`/user/trips/create`)
 				.set('authorization', token)
 				.send(addTrip);
 
 			expect(response.status).toEqual(201);
 		});
-		it('should respond with 400 for bad guideId', async () => {
-			const guideId = 111;
-			const addTrip = {
-				title: 'tesasasfdtaso',
-				description: 'This is a test trip again',
-				designation: 'professional',
-				duration: '3.5 days',
-				type: 'Backcountry rock-climbing'
-			};
-			let response = await request(server)
-				.post(`/user/trips/${guideId}/create`)
-				.set('authorization', token)
-				.send(addTrip);
-
-			expect(response.status).toEqual(400);
-		});
 		it('should respond with 404 for missing req params', async () => {
-			const guideId = 1;
 			const addTrip = {
 				designation: 'professional',
 				duration: '3.5 days',
 				type: 'Backcountry rock-climbing'
 			};
 			let response = await request(server)
-				.post(`/user/trips/${guideId}/create`)
+				.post(`/user/trips/create`)
 				.set('authorization', token)
 				.send(addTrip);
 
 			expect(response.status).toEqual(404);
 		});
 		it('should respond with 400 for wrong designation', async () => {
-			const guideId = 1;
 			const addTrip = {
 				title: 'adsfadsg',
 				description: 'This is a test trip again',
@@ -195,14 +158,13 @@ describe('Trips router tests (/trips routes)', () => {
 				type: 'Backcountry rock-climbing'
 			};
 			let response = await request(server)
-				.post(`/user/trips/${guideId}/create`)
+				.post(`/user/trips/create`)
 				.set('authorization', token)
 				.send(addTrip);
 
 			expect(response.status).toEqual(400);
 		});
 		it('should respond with newly created tripId', async () => {
-			const guideId = 1;
 			const addTrip = {
 				title: 'adfas',
 				description: 'This is a test trip again',
@@ -211,7 +173,7 @@ describe('Trips router tests (/trips routes)', () => {
 				type: 'Backcountry rock-climbing'
 			};
 			let response = await request(server)
-				.post(`/user/trips/${guideId}/create`)
+				.post(`/user/trips/create`)
 				.set('authorization', token)
 				.send(addTrip);
 
