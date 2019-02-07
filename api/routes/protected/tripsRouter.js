@@ -13,10 +13,21 @@ const { hasCorrectKeys, checkDesignation, typeCoercion } = require('../../middle
 
 const router = express.Router();
 
+router.param('guideId', async function(req, res, next) {
+	const { id } = req.decodedToken.user;
+	const user = await getUserById(id);
+	if (user) {
+		req.guide = user;
+		next();
+	} else {
+		next(err);
+	}
+});
+
 router.get('/:guideId/all', async (req, res, next) => {
-	const { guideId } = req.params;
+	const { id } = req.guide;
 	try {
-		const trips = await getTripsByUser(guideId);
+		const trips = await getTripsByUser(id);
 		if (trips.legnth === 0) return res.status(404).json(trips);
 		res.status(200).json(trips);
 	} catch (err) {
@@ -25,9 +36,10 @@ router.get('/:guideId/all', async (req, res, next) => {
 });
 
 router.get('/:guideId/:tripId', async (req, res, next) => {
-	const { tripId, guideId } = req.params;
+	const { tripId } = req.params;
+	const { guide } = req;
 	try {
-		const trip = await getTripByIds(tripId, guideId);
+		const trip = await getTripByIds(tripId, guide.id);
 		if (trip === 'fail')
 			return next({ status: 400, message: 'That trip is not connected to the specified guide ID' });
 		if (!trip || trip === 0) {
@@ -43,14 +55,15 @@ router.get('/:guideId/:tripId', async (req, res, next) => {
 });
 
 router.put('/:guideId/:tripId', typeCoercion, async (req, res, next) => {
-	const { tripId, guideId } = req.params;
+	const { tripId } = req.params;
+	const { guide } = req;
 	const updates = req.body;
 	try {
-		const user = await getUserById(guideId);
+		// const user = await getUserById(guideId);
 		const trip = await getById(tripId);
-		const connection = await getTripByIds(tripId, guideId);
+		const connection = await getTripByIds(tripId, guide.id);
 
-		if (!user) next({ status: 404, message: 'A user with that iD does not exist' }, res);
+		// if (!user) next({ status: 404, message: 'A user with that iD does not exist' }, res);
 		if (!trip) next({ status: 404, message: 'A trip with that ID does not exist' }, res);
 		if (connection === 'fail') {
 			next({ status: 400, message: "You must be the trip's guide to make changes" }, res);
@@ -82,11 +95,11 @@ router.post(
 	typeCoercion,
 	checkDesignation,
 	async (req, res, next) => {
-		const { guideId } = req.params;
+		const { guide } = req;
 		const tripInfo = req.body;
 		try {
-			const guide = await getUserById(guideId);
-			if (!guide) next({ status: 400, message: 'A user with that ID does not exist' }, res);
+			// const guide = await getUserById(guideId);
+			// if (!guide) next({ status: 400, message: 'A user with that ID does not exist' }, res);
 			const tripId = await createTrip({ ...tripInfo, guide_id: guide.id });
 			res.status(201).json(tripId);
 		} catch (err) {

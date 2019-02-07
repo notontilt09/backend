@@ -20,9 +20,7 @@ module.exports = {
 	},
 	generateToken: function(user) {
 		const secret = process.env.JWT_SECRET || 'beep boop';
-		const payload = {
-			username: user.username
-		};
+		const payload = { user };
 		const options = {
 			expiresIn: '48h',
 			jwtid: 'guidr'

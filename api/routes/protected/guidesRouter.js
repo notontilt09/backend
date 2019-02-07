@@ -3,6 +3,17 @@ const { updateUser, getUserById } = require('../../helpers/guideHelpers');
 
 const router = express.Router();
 
+// router.param('guideId', async function(req, res, next) {
+// 	const { id } = req.decodedToken.user;
+// 	const user = await getUserById(id);
+// 	if (user) {
+// 		req.guideId = user.id;
+// 		next();
+// 	} else {
+// 		next(err);
+// 	}
+// });
+
 router.get('/:guideId', async (req, res, next) => {
 	const { guideId } = req.params;
 	try {
