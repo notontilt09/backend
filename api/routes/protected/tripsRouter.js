@@ -18,7 +18,7 @@ router.param('guideId', async function(req, res, next) {
 	next();
 });
 
-router.get('/:guideId/all', async (req, res, next) => {
+router.get('/all', async (req, res, next) => {
 	const { id } = req.guide;
 	try {
 		const trips = await getTripsByUser(id);
@@ -29,7 +29,7 @@ router.get('/:guideId/all', async (req, res, next) => {
 	}
 });
 
-router.get('/:guideId/:tripId', async (req, res, next) => {
+router.get('/:tripId', async (req, res, next) => {
 	const { tripId } = req.params;
 	const { guide } = req;
 	try {
@@ -48,7 +48,7 @@ router.get('/:guideId/:tripId', async (req, res, next) => {
 	}
 });
 
-router.put('/:guideId/:tripId', typeCoercion, async (req, res, next) => {
+router.put('/:tripId', typeCoercion, async (req, res, next) => {
 	const { tripId } = req.params;
 	const { guide } = req;
 	const updates = req.body;
@@ -80,22 +80,16 @@ router.post('/:tripId/upload', async (req, res, next) => {
 	}
 });
 
-router.post(
-	'/:guideId/create',
-	hasCorrectKeys,
-	typeCoercion,
-	checkDesignation,
-	async (req, res, next) => {
-		const { guide } = req;
-		const tripInfo = req.body;
-		try {
-			const tripId = await createTrip({ ...tripInfo, guide_id: guide.id });
-			res.status(201).json(tripId);
-		} catch (err) {
-			next({ message: err }, res);
-		}
+router.post('/create', hasCorrectKeys, typeCoercion, checkDesignation, async (req, res, next) => {
+	const { guide } = req;
+	const tripInfo = req.body;
+	try {
+		const tripId = await createTrip({ ...tripInfo, guide_id: guide.id });
+		res.status(201).json(tripId);
+	} catch (err) {
+		next({ message: err }, res);
 	}
-);
+});
 
 router.delete('/:tripId', async (req, res, next) => {
 	const { tripId } = req.params;
