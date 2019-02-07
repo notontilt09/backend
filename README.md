@@ -284,7 +284,7 @@ _example:_
 
 #### Gets all trips related to specified guide
 
-_Method Url:_ `/user/trips/:guideId/all`
+_Method Url:_ `/user/trips/all`
 _HTTP method:_ **_[GET]_**
 
 #### Responses
@@ -338,7 +338,7 @@ _HTTP method:_ **_[GET]_**
 
 #### Get's specific trip, linked to specified guideId
 
-_Method Url:_ `/user/trips/:guideId/:tripId`
+_Method Url:_ `/user/trips/:tripId`
 _HTTP method:_ **_[GET]_**
 
 #### Responses
@@ -364,7 +364,7 @@ _HTTP method:_ **_[GET]_**
 
 ##### 400 (Bad Request)
 
-> If you supply an invalid tripId or guideId, the endpoint will return an HTTP response with a status code `404` and a body as below.
+> If you supply an invalid tripId, the endpoint will return an HTTP response with a status code `404` and a body as below.
 
 ```
 {
@@ -380,7 +380,7 @@ _HTTP method:_ **_[GET]_**
 
 #### Update's a specific trip
 
-_Method Url:_ `/user/trips/:guideId/:tripId`
+_Method Url:_ `/user/trips/:tripId`
 _HTTP method:_ **_[PUT]_**
 
 #### Body
@@ -419,7 +419,7 @@ _example:_
 
 ##### 404 (Bad Request)
 
-> If you supply an invalid tripId or guideId, the endpoint will return an HTTP response with a status code `404` and a body as below.
+> If you supply an invalid tripId, the endpoint will return an HTTP response with a status code `404` and a body as below.
 
 ```
 {
@@ -429,7 +429,7 @@ _example:_
 
 ##### 400 (Invalid Request)
 
-> If you supply valid guideId and tripId but they aren't related, the endpoint will return an HTTP response with a status code `400` and a body as below.
+> If you supply a valid tripId but it's not related to the logged in user, the endpoint will return an HTTP response with a status code `400` and a body as below.
 
 ```
 {
@@ -445,7 +445,7 @@ _example:_
 
 #### Inserts a new trip object
 
-_Method Url:_ `/user/trips/:guideId/create`
+_Method Url:_ `/user/trips/create`
 _HTTP method:_ **_[POST]_**
 
 #### Body
@@ -484,18 +484,6 @@ _example:_
 11
 }
 ```
-
-##### 400 (Bad Request)
-
-> If you supply an invalid guideId, the endpoint will return an HTTP response with a status code `400` and a body as below.
-
-```
-{
-    "error": "A user with that ID does not exist"
-}
-```
-
----
 
 ### **CREATE TRIP IMAGE**
 
@@ -552,7 +540,7 @@ _example:_
 
 #### Delete trip specified by tripId
 
-_Method Url:_ `/user/trips/:tripId`
+_Method Url:_ `/user/trips/:id`
 _HTTP method:_ **_[DELETE]_**
 
 #### Responses
