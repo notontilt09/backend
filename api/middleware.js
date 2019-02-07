@@ -40,7 +40,6 @@ module.exports = {
 					res.status(401).json({ error: 'Invalid token' });
 				} else {
 					req.decodedToken = decodedToken;
-					req.guideId = decodedToken.guide.id;
 					next();
 				}
 			});

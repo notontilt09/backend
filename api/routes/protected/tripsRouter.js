@@ -18,14 +18,13 @@ router.param('tripId', async function(req, res, next, tripId) {
 		next();
 	} else {
 		next({ status: 404, message: 'A trip with that ID does not exist' }, res);
-		// next();
 	}
 });
 
 router.get('/all', async (req, res, next) => {
-	const { guideId } = req;
+	const { guide } = req.decodedToken;
 	try {
-		const trips = await getTripsByUser(guideId);
+		const trips = await getTripsByUser(guide.id);
 		if (trips.legnth === 0) return res.status(404).json(trips);
 		res.status(200).json(trips);
 	} catch (err) {
@@ -37,12 +36,10 @@ router.get('/:tripId', async (req, res, next) => {
 	const { trip } = req;
 	const { guide } = req.decodedToken;
 	try {
-		// if (!trip) (next({status: 404, message: "A trip with that ID does not exist"}))
 		if (trip.guide_id !== guide.id)
 			return next({ status: 400, message: 'That trip is not connected to the specified guide ID' });
 		res.status(200).json(trip);
 	} catch (err) {
-		console.log(err);
 		next({ message: err }, res);
 	}
 });
@@ -52,7 +49,6 @@ router.put('/:tripId', typeCoercion, async (req, res, next) => {
 	const { guide } = req.decodedToken;
 	const updates = req.body;
 	try {
-		// if (!trip) next({ status: 404, message: 'A trip with that ID does not exist' }, res);
 		if (trip.guide_id !== guide.id) {
 			next({ status: 400, message: "You must be the trip's guide to make changes" }, res);
 		}
@@ -67,7 +63,6 @@ router.post('/:tripId/upload', async (req, res, next) => {
 	const { trip } = req;
 	const image = req.body;
 	try {
-		// if (!trip) return next({ status: 404, message: 'A trip with that id does not exist' }, res);
 		const id = await addImage({ ...image, trip_id: trip.id });
 		res.status(201).json(id);
 	} catch (err) {
