@@ -20,23 +20,27 @@ describe('Public (no auth) Routes', () => {
 	});
 	describe('GET /guidr/trips/:tripId', () => {
 		it('should respond with 200 if trip exists', async () => {
-			let id = 10;
+			let id = 6;
 			const response = await request(server).get(`/guidr/trips/${id}`);
 
 			expect(response.status).toBe(200);
 		});
 		it('should send trip object', async () => {
-			let id = 10;
+			let id = 2;
 			let response = await request(server).get(`/guidr/trips/${id}`);
 			let expected = await getById(id);
 
 			expect(response.body.id).toEqual(expected.id);
 			expect(response.body.length).toEqual(expected.length);
 		});
-		it('should respond with 404 if invalid id', async () => {
+		it('should respond with 404 if invalid id/or trip not public', async () => {
 			let id = 1000;
 			let response = await request(server).get(`/guidr/trips/${id}`);
 
+			expect(response.status).toEqual(404);
+
+			id = 15;
+			response = await request(server).get(`/guidr/trips/${id}`);
 			expect(response.status).toEqual(404);
 		});
 	});
@@ -57,6 +61,28 @@ describe('Public (no auth) Routes', () => {
 			expect(response.body[8].tagline).toBeTruthy();
 			expect(response.body[8].title).toEqual(expected[8].title);
 			expect(response.body.length).toEqual(expected.length);
+		});
+	});
+	describe('GET /guidr/guides/:guideId', () => {
+		it('should respond with 200 if guide exists', async () => {
+			let id = 10;
+			const response = await request(server).get(`/guidr/guides/${id}`);
+
+			expect(response.status).toBe(200);
+		});
+		it('should send trip object', async () => {
+			let id = 10;
+			let response = await request(server).get(`/guidr/guides/${id}`);
+			let expected = await getById(id);
+
+			expect(response.body.id).toEqual(expected.id);
+			expect(response.body.length).toEqual(expected.length);
+		});
+		it('should respond with 404 if invalid id', async () => {
+			let id = 1000;
+			let response = await request(server).get(`/guidr/guides/${id}`);
+
+			expect(response.status).toEqual(404);
 		});
 	});
 });

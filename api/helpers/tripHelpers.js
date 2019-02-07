@@ -4,6 +4,11 @@ module.exports = {
 	getTrips: function() {
 		return db('trips');
 	},
+	getPublicTrip: function(id) {
+		return db('trips')
+			.where({ id, designation: 'Professional' })
+			.first();
+	},
 	getPublicTrips: function() {
 		return db('trips').where({ designation: 'Professional' });
 	},
