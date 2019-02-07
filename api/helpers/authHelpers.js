@@ -22,7 +22,7 @@ module.exports = {
 		const secret = process.env.JWT_SECRET || 'beep boop';
 		const payload = { user };
 		const options = {
-			expiresIn: '48h',
+			expiresIn: '72h',
 			jwtid: 'guidr'
 		};
 		return jwt.sign(payload, secret, options);

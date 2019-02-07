@@ -89,7 +89,7 @@ describe('helper function tests', () => {
 				username: 'testerrrr'
 			};
 			const options = {
-				expiresIn: '24h',
+				expiresIn: '72h',
 				jwtid: 'guidr'
 			};
 
