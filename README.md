@@ -221,7 +221,7 @@ _HTTP method:_ **_[PUT]_**
 
 | name           | type   | required | description                |
 | -------------- | ------ | -------- | -------------------------- |
-| `name`         | String | No       | Guide's name               |
+| `name`         | String | No       | Guide's name (unique)      |
 | `age`          | Int    | No       | Age of guide               |
 | `tagline`      | String | No       | Short description of guide |
 | `title`        | String | No       | Job title                  |
