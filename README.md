@@ -1,4 +1,4 @@
-# guidr table schema
+# guidr database schema
 
 ### **_Deployed API_**
 
