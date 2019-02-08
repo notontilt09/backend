@@ -20,11 +20,9 @@ module.exports = {
 	},
 	generateToken: function(user) {
 		const secret = process.env.JWT_SECRET || 'beep boop';
-		const payload = {
-			username: user.username
-		};
+		const payload = { guide: user };
 		const options = {
-			expiresIn: '48h',
+			expiresIn: '72h',
 			jwtid: 'guidr'
 		};
 		return jwt.sign(payload, secret, options);
@@ -32,7 +30,7 @@ module.exports = {
 	decodeToken: function(token, callback) {
 		const secret = process.env.JWT_SECRET || 'beep boop';
 		const options = {
-			expiresIn: '24h',
+			expiresIn: '72h',
 			jwtid: 'guidr'
 		};
 		if (callback) {

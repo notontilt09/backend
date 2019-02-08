@@ -52,7 +52,7 @@ describe('Sign In Route Tests (/auth routes)', () => {
 
 			expect(response.body).toBeTruthy();
 			expect(response.body.id).toEqual(lastId + 1);
-			expect(decoded.username).toEqual(user.username);
+			expect(decoded.guide.username).toEqual(user.username);
 		});
 	});
 
@@ -85,8 +85,6 @@ describe('Sign In Route Tests (/auth routes)', () => {
 
 			expect(token).toBeTruthy();
 			expect(id).toBe(1);
-			// expect(user.username).toEqual(guide.username);
-			// expect(user.name).toBe(guide.name);
 		});
 		it('should send 404 for incorrect username', async () => {
 			const fail = { password: '850RKI7uKgC', username: 'sjoskowitz1' };

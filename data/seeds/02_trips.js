@@ -369,7 +369,7 @@ const seedTrips = trips.map(trip => {
 
 exports.seed = function(knex, Promise) {
 	return knex('trips')
-		.truncate()
+		.del()
 		.then(function() {
 			return knex('trips').insert(seedTrips);
 		});

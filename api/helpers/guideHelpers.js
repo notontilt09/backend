@@ -9,6 +9,12 @@ module.exports = {
 			.where({ id })
 			.first();
 	},
+	getPublicUser: function(id) {
+		return db('guides')
+			.where({ id })
+			.select('id', 'name', 'tagline', 'age', 'title', 'careerLength')
+			.first();
+	},
 	updateUser: function(id, info) {
 		return db('guides')
 			.where({ id })

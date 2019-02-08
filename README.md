@@ -1,4 +1,8 @@
-# guidr table schema
+# guidr database schema
+
+### **_Deployed API_**
+
+`https://guidr-api.herokuapp.com`
 
 ## **PUBLIC ROUTES**
 
@@ -38,6 +42,46 @@ _HTTP method:_ **_[GET]_**
 
 ---
 
+### **GET GUIDE**
+
+---
+
+#### Fetches specific guide's public info
+
+_Method Url:_ `/guidr/guides/:guideId`
+_HTTP method:_ **_[GET]_**
+
+#### Responses
+
+---
+
+##### 200 (OK)
+
+> If you successfully fetch the guide, the endpoint will return an HTTP response with a status code `200` and an object as below.
+
+```
+{
+    "id": 1,
+    "name": "Stephannie Joskowitz",
+    "tagline": "Aliquam nec pellentesque erat. Nam tristique et tellus quis rutrum. Suspendisse potenti. Mauris arcu neque, feugiat eu ex eu, dapibus dignissim augue. Integer nec augue velit. Donec sit amet neque cursus, tempus turpis vel, sodales libero.",
+    "age": 34,
+    "title": "Expert Guide",
+    "careerLength": "3 years"
+}
+```
+
+##### 404 (Bad Request)
+
+> If you send in an invalid guideId, the endpoint will return an HTTP response with a status code `404` and a body as below.
+
+```
+{
+    "error": "That user does not exist"
+}
+```
+
+---
+
 ### **GET TRIPS**
 
 ---
@@ -69,6 +113,50 @@ _HTTP method:_ **_[GET]_**
     "updated_at": "2019-02-05T17:59:09.590Z"
 }
 ```
+
+### **GET GUIDE**
+
+---
+
+#### Fetches specific trip's public info
+
+_Method Url:_ `/guidr/trips/:tripId`
+_HTTP method:_ **_[GET]_**
+
+#### Responses
+
+---
+
+##### 200 (OK)
+
+> If you successfully fetch the trip, the endpoint will return an HTTP response with a status code `200` and an object as below.
+
+```
+{
+   "id": 2,
+    "title": "Horse Rebellion",
+    "description": "Tough Russian Mountain Escape",
+    "designation": "Professional",
+    "type": "Valuyki",
+    "duration": "2 days",
+    "guide_id": 6,
+    "img_url": "https://images.pexels.com/photos/1840102/pexels-photo-1840102.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "created_at": "2019-02-05T17:59:09.590Z",
+    "updated_at": "2019-02-05T17:59:09.590Z"
+}
+```
+
+##### 404 (Bad Request)
+
+> If you send in an invalid tripId, the endpoint will return an HTTP response with a status code `404` and a body as below.
+
+```
+{
+    "error": "That user does not exist"
+}
+```
+
+---
 
 ## **PROTECTED ROUTES**
 
@@ -137,7 +225,7 @@ _HTTP method:_ **_[PUT]_**
 
 | name           | type   | required | description                |
 | -------------- | ------ | -------- | -------------------------- |
-| `name`         | String | No       | Guide's name               |
+| `name`         | String | No       | Guide's name (unique)      |
 | `age`          | Int    | No       | Age of guide               |
 | `tagline`      | String | No       | Short description of guide |
 | `title`        | String | No       | Job title                  |
@@ -200,7 +288,7 @@ _example:_
 
 #### Gets all trips related to specified guide
 
-_Method Url:_ `/user/trips/:guideId/all`
+_Method Url:_ `/user/trips/all`
 _HTTP method:_ **_[GET]_**
 
 #### Responses
@@ -254,7 +342,7 @@ _HTTP method:_ **_[GET]_**
 
 #### Get's specific trip, linked to specified guideId
 
-_Method Url:_ `/user/trips/:guideId/:tripId`
+_Method Url:_ `/user/trips/:tripId`
 _HTTP method:_ **_[GET]_**
 
 #### Responses
@@ -280,7 +368,7 @@ _HTTP method:_ **_[GET]_**
 
 ##### 400 (Bad Request)
 
-> If you supply an invalid tripId or guideId, the endpoint will return an HTTP response with a status code `404` and a body as below.
+> If you supply an invalid tripId, the endpoint will return an HTTP response with a status code `404` and a body as below.
 
 ```
 {
@@ -296,7 +384,7 @@ _HTTP method:_ **_[GET]_**
 
 #### Update's a specific trip
 
-_Method Url:_ `/user/trips/:guideId/:tripId`
+_Method Url:_ `/user/trips/:tripId`
 _HTTP method:_ **_[PUT]_**
 
 #### Body
@@ -335,7 +423,7 @@ _example:_
 
 ##### 404 (Bad Request)
 
-> If you supply an invalid tripId or guideId, the endpoint will return an HTTP response with a status code `404` and a body as below.
+> If you supply an invalid tripId, the endpoint will return an HTTP response with a status code `404` and a body as below.
 
 ```
 {
@@ -345,7 +433,7 @@ _example:_
 
 ##### 400 (Invalid Request)
 
-> If you supply valid guideId and tripId but they aren't related, the endpoint will return an HTTP response with a status code `400` and a body as below.
+> If you supply a valid tripId but it's not related to the logged in user, the endpoint will return an HTTP response with a status code `400` and a body as below.
 
 ```
 {
@@ -361,7 +449,7 @@ _example:_
 
 #### Inserts a new trip object
 
-_Method Url:_ `/user/trips/:guideId/create`
+_Method Url:_ `/user/trips/create`
 _HTTP method:_ **_[POST]_**
 
 #### Body
@@ -400,18 +488,6 @@ _example:_
 11
 }
 ```
-
-##### 400 (Bad Request)
-
-> If you supply an invalid guideId, the endpoint will return an HTTP response with a status code `400` and a body as below.
-
-```
-{
-    "error": "A user with that ID does not exist"
-}
-```
-
----
 
 ### **CREATE TRIP IMAGE**
 
@@ -468,7 +544,7 @@ _example:_
 
 #### Delete trip specified by tripId
 
-_Method Url:_ `/user/trips/:tripId`
+_Method Url:_ `/user/trips/:id`
 _HTTP method:_ **_[DELETE]_**
 
 #### Responses
