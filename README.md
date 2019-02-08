@@ -1,5 +1,9 @@
 # guidr table schema
 
+### **_Deployed API_**
+
+`https://guidr-api.herokuapp.com`
+
 ## **PUBLIC ROUTES**
 
 ### Headers
