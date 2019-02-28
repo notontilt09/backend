@@ -23,9 +23,10 @@ router.param('tripId', async function(req, res, next, tripId) {
 
 router.get('/all', async (req, res, next) => {
 	const { guide } = req.decodedToken;
+	console.log(guide);
 	try {
 		const trips = await getTripsByUser(guide.id);
-		if (trips.legnth === 0) return res.status(404).json(trips);
+		if (trips.length === 0) return res.status(404).json(trips);
 		res.status(200).json(trips);
 	} catch (err) {
 		next({ message: err }, res);
