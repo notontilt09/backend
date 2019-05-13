@@ -20,7 +20,7 @@ module.exports = {
 	getTripsByUser: function(id) {
 		return db('trips')
 			.where({ guide_id: id })
-			.select('id', 'title', 'description', 'img_url', 'designation', 'duration', 'updated_at');
+			// .select('id', 'title', 'description', 'img_url', 'designation', 'duration', 'updated_at');
 	},
 	getTripByIds: function(tripId, guideId) {
 		const guide = db('guides')
